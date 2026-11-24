@@ -83,8 +83,8 @@
             "5,000 in-game coins",
             "+500 bonus coins"
           ],
-          "featured": true,
-          "badge": "Popular"
+          "featured": false,
+          "badge": ""
         },
         {
           "name": "12,000 coins",
@@ -163,8 +163,8 @@
             "1 Mystic Key",
             "Opens the Mystic crate"
           ],
-          "featured": true,
-          "badge": "Popular"
+          "featured": false,
+          "badge": ""
         },
         {
           "name": "Storm Key",
@@ -253,8 +253,8 @@
         "Access to /enderchest",
         "Priority queue when the server is full"
       ],
-      "featured": true,
-      "badge": "Popular"
+      "featured": false,
+      "badge": ""
     },
     {
       "name": "Storm",
