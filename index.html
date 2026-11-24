@@ -1,0 +1,2011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Minecraft Server</title>
+<meta name="description" content="Minecraft server landing page">
+<meta name="theme-color" content="#0a0a0c">
+<link rel="icon" id="favicon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%233b82ff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Manrope:wght@400;500;700&family=Russo+One&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --accent:#3b82ff; --accent2:#22d3ee; --scroll-hue:0deg;
+  --bg:#020408; --text:#eef0f6; --muted:#9aa1b1;
+  --glass:rgba(255,255,255,.045); --glass-2:rgba(255,255,255,.075);
+  --stroke:rgba(255,255,255,.09); --stroke-2:rgba(255,255,255,.16);
+  --on-accent:#0a0a0c; --radius:20px; --blur:12px;
+  --head:"Russo One","Chakra Petch",system-ui,sans-serif;
+  --ui:"Chakra Petch",system-ui,sans-serif;
+  --body:"Manrope",system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.8,.2,1);
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{background:var(--bg);color:var(--text);font-family:var(--body);line-height:1.6;overflow-x:hidden;position:relative}
+/* ambient colour: solid circles, blurred - no gradients anywhere */
+body::before,body::after{content:"";position:fixed;z-index:0;pointer-events:none;border-radius:50%;filter:blur(90px) hue-rotate(var(--scroll-hue));opacity:.5;will-change:filter}
+body::before{width:520px;height:520px;top:-160px;right:-120px;background:color-mix(in srgb,var(--accent) 42%,transparent)}
+body::after{width:420px;height:420px;top:38%;left:-180px;background:color-mix(in srgb,var(--accent2) 22%,transparent);opacity:.35}
+a{color:inherit}
+h1,h2{font-family:var(--head);font-weight:400;line-height:1.1;letter-spacing:.005em}
+h3{font-family:var(--ui);line-height:1.25}
+button,.btn,a,summary{cursor:pointer}
+:focus-visible{outline:2px solid color-mix(in srgb,var(--accent) 80%,#fff);outline-offset:3px}
+.skip{position:absolute;left:-999px;top:8px;background:var(--accent);color:var(--on-accent);padding:10px 16px;z-index:50;font-weight:700;border-radius:10px}
+.skip:focus{left:8px}
+
+/* ---------- glass surfaces ---------- */
+.glass{background:var(--glass);border:1px solid var(--stroke);backdrop-filter:blur(var(--blur)) saturate(150%);-webkit-backdrop-filter:blur(var(--blur)) saturate(150%);
+  border-radius:var(--radius);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 18px 44px rgba(0,0,0,.42)}
+
+/* ---------- header ---------- */
+.top{display:flex;align-items:center;gap:22px;padding:14px clamp(16px,5vw,56px);position:sticky;top:0;z-index:10;
+  background:rgba(10,11,17,.55);backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);border-bottom:1px solid var(--stroke)}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-family:var(--head);font-size:1.1rem;min-width:0}
+#brandName{overflow-wrap:anywhere;min-width:0}
+.logo{width:38px;height:38px;object-fit:cover;border-radius:12px;border:1px solid var(--stroke-2)}
+#nav{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap;justify-content:flex-end}
+#nav a{text-decoration:none;color:var(--muted);font:500 .93rem var(--ui);padding:8px 13px;border-radius:10px;position:relative;transition:color .2s,background .2s,box-shadow .2s}
+#nav a:hover{color:var(--text);background:var(--glass-2);box-shadow:inset 0 0 0 1px var(--stroke)}
+#nav a[aria-current="true"]{color:var(--text);background:var(--glass-2);box-shadow:inset 0 0 0 1px var(--stroke-2)}
+#nav a[aria-current="true"]::after{content:"";position:absolute;left:50%;bottom:-6px;width:16px;height:2px;transform:translateX(-50%);background:var(--accent);border-radius:2px}
+.mini-copy{display:flex;align-items:center;gap:10px;font:600 .84rem var(--ui);color:var(--text);
+  background:var(--glass);border:1px solid var(--stroke);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  padding:8px 8px 8px 14px;border-radius:12px;transition:border-color .2s,background .2s}
+.mini-copy:hover{border-color:var(--stroke-2);background:var(--glass-2)}
+.mini-copy b{background:color-mix(in srgb,var(--accent) 88%,transparent);color:var(--on-accent);padding:4px 10px;border-radius:8px;font-size:.76rem}
+
+/* ---------- store button + floating navbar (site.json) ---------- */
+.store-btn{display:none;align-items:center;justify-content:center;gap:8px;text-decoration:none;font:700 .84rem var(--ui);
+  background:color-mix(in srgb,var(--accent) 84%,transparent);color:var(--on-accent);padding:10px 16px;border-radius:12px;
+  border:1px solid color-mix(in srgb,var(--accent) 60%,#fff 12%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.28);transition:filter .2s,transform .15s}
+.store-btn:hover{filter:brightness(1.08)}
+.store-btn:active{transform:translateY(1px)}
+body.store-on .store-btn{display:inline-flex}
+#nav a.nav-store{color:color-mix(in srgb,var(--accent) 72%,#fff)}
+#nav a.nav-store:hover{color:var(--text)}
+html.nav-floating{scroll-padding-top:120px}
+body.nav-floating .top{position:fixed;top:14px;left:14px;right:14px;max-width:1200px;margin:0 auto;
+  border:1px solid var(--stroke);border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.6);padding:10px clamp(14px,2.4vw,26px)}
+body.nav-floating main{padding-top:84px}
+@media (max-width:820px){
+  body.nav-floating .top{top:10px;left:10px;right:10px;padding:8px 14px}
+  body.nav-floating main{padding-top:72px}
+  .store-btn{padding:9px 13px;font-size:.8rem}
+}
+
+.custom-cursor{position:fixed;top:0;left:0;z-index:100;pointer-events:none;opacity:0;transform:translate3d(var(--cursor-x,-100px),var(--cursor-y,-100px),0) translate(-50%,-50%);
+  transition:opacity .18s ease,transform .12s ease-out;will-change:transform}
+.custom-cursor::before{content:"";display:block;width:24px;height:24px;border:1.5px solid var(--accent);border-radius:50%;background:color-mix(in srgb,var(--accent) 12%,transparent);transition:width .18s,height .18s}
+.custom-cursor::after{content:"";position:absolute;left:50%;top:50%;width:4px;height:4px;transform:translate(-50%,-50%);border-radius:50%;background:var(--accent)}
+.custom-cursor.visible{opacity:1}
+.custom-cursor.hovering::before{width:36px;height:36px}
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+  body.custom-cursor-enabled,body.custom-cursor-enabled a,body.custom-cursor-enabled button,body.custom-cursor-enabled summary{cursor:none!important}
+}
+
+/* ---------- hero ---------- */
+.hero{position:relative;z-index:1;display:grid;grid-template-columns:1.1fr .9fr;gap:52px;align-items:center;
+  padding:clamp(44px,8vw,110px) clamp(16px,5vw,56px) clamp(28px,5vw,54px);max-width:1240px;margin:auto}
+.hero>*{min-width:0}
+.status{display:inline-flex;align-items:center;gap:10px;font:500 .88rem var(--ui);color:var(--muted);
+  padding:7px 16px 7px 12px;border:1px solid var(--stroke);border-radius:99px;margin-bottom:22px;
+  background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.dot{width:9px;height:9px;border-radius:50%;background:#777;position:relative}
+.status.online .dot{background:#3ddc84}
+.status.online .dot::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:2px solid #3ddc84;animation:pulse 1.8s ease-out infinite}
+.status.offline .dot{background:#ff5555}
+@keyframes pulse{0%{transform:scale(.5);opacity:.9}100%{transform:scale(1.7);opacity:0}}
+h1{font-size:clamp(2.7rem,7.2vw,5.2rem);margin-bottom:18px;overflow-wrap:anywhere;color:var(--text)}
+.lead{color:var(--muted);font-size:1.12rem;max-width:46ch;margin-bottom:30px;overflow-wrap:anywhere}
+.ipbox{display:flex;max-width:480px;margin-bottom:16px;border:1px solid var(--stroke);background:var(--glass);
+  border-radius:16px;backdrop-filter:blur(var(--blur));-webkit-backdrop-filter:blur(var(--blur));overflow:hidden}
+.ipbox code{flex:1;padding:16px 20px;font:600 1.05rem var(--ui);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;align-self:center;min-width:0}
+.ipbox button,.btn{font:700 .98rem var(--ui);border:1px solid color-mix(in srgb,var(--accent) 58%,#fff 10%);
+  text-decoration:none;display:inline-flex;align-items:center;justify-content:center;
+  background:color-mix(in srgb,var(--accent) 86%,transparent);color:var(--on-accent);padding:15px 26px;min-height:48px;
+  border-radius:14px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.28);transition:filter .2s,transform .15s}
+.ipbox button{border:0;border-radius:0;min-height:100%;height:auto;padding:0 26px;box-shadow:inset 1px 0 0 rgba(255,255,255,.12)}
+.ipbox button:hover,.btn:hover{filter:brightness(1.09)}
+.btn.ghost{background:var(--glass);color:var(--text);border:1px solid var(--stroke);box-shadow:none;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:12px 22px;font-size:.93rem;min-height:44px}
+.btn.ghost:hover{background:var(--glass-2);border-color:var(--stroke-2);filter:none}
+.ipbox button:active,.btn:active{transform:translateY(1px)}
+
+/* ---------- hero visual: glass live card ---------- */
+.stage{position:relative;display:grid;place-items:center;padding:12px 0}
+.stage::before{content:"";position:absolute;z-index:0;width:78%;height:62%;border-radius:50%;bottom:4%;
+  background:color-mix(in srgb,var(--accent) 26%,transparent);filter:blur(90px);opacity:.55;pointer-events:none}
+@media (max-width:820px){.stage{padding:0}}
+
+/* ---------- hero: live stats ---------- */
+.live-stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;max-width:480px}
+.live-stats[hidden],.stat[hidden],.stat-sub[hidden]{display:none}
+.stat{position:relative;flex:1 1 150px;min-width:140px;padding:15px 16px 14px;background:var(--glass);
+  border:1px solid var(--stroke);border-radius:16px;overflow:hidden;backdrop-filter:blur(var(--blur));-webkit-backdrop-filter:blur(var(--blur))}
+.stat::before{content:"";position:absolute;inset:0 auto 0 0;width:2px;background:var(--accent)}
+.stat-value{display:block;font:400 1.6rem/1.1 var(--head);font-variant-numeric:tabular-nums}
+.stat-label{display:block;color:var(--muted);font:600 .7rem var(--ui);letter-spacing:.1em;text-transform:uppercase;margin-top:6px}
+.stat-sub{display:block;color:var(--muted);font-size:.76rem;margin-top:2px}
+.hero-live{position:relative;z-index:1;width:100%;max-width:480px;display:grid;grid-template-columns:88px 1fr;gap:18px 22px;align-items:center;
+  background:var(--glass);border:1px solid var(--stroke-2);border-radius:24px;padding:28px;text-align:left;
+  backdrop-filter:blur(26px) saturate(150%);-webkit-backdrop-filter:blur(26px) saturate(150%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 26px 60px rgba(0,0,0,.5);
+  transition:transform .35s var(--ease);will-change:transform}
+.live-card-heading{grid-column:1/-1;color:color-mix(in srgb,var(--accent) 78%,#fff);font:700 .74rem var(--ui);letter-spacing:.16em;text-transform:uppercase}
+.hero-live::before{content:"";position:absolute;inset:0 0 auto 0;height:1px;background:rgba(255,255,255,.16)}
+.hero-logo{grid-column:1;grid-row:2;width:88px;height:88px;object-fit:cover;border-radius:20px;position:relative;z-index:1;
+  animation:float 5s ease-in-out infinite;border:1px solid var(--stroke-2);box-shadow:0 16px 34px rgba(0,0,0,.45)}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+.live-summary{grid-column:2;grid-row:2;min-width:0;position:relative;z-index:1}
+.counter{font:400 clamp(2.6rem,5vw,4rem) var(--head);line-height:1;position:relative;z-index:1;font-variant-numeric:tabular-nums}
+.counter .slash{color:var(--muted);margin:0 6px}
+#playersMax{color:var(--muted)}
+.counter-label{color:var(--muted);margin:8px 0 14px;position:relative;z-index:1;font-family:var(--ui)}
+.bar{grid-column:1/-1;height:6px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden;position:relative;z-index:1}
+.bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:99px;transition:width 1.2s var(--ease)}
+.loading .sk{color:transparent;background:rgba(255,255,255,.1);border-radius:6px;display:inline-block;min-width:1.4ch;
+  animation:shimmer 1.4s ease-in-out infinite}
+@keyframes shimmer{0%,100%{opacity:.55}50%{opacity:1}}
+.motd{grid-column:1/-1;margin-top:0;padding:12px 14px;background:rgba(0,0,0,.35);border:1px solid var(--stroke);border-radius:12px;
+  text-align:center;font:500 .9rem/1.45 ui-monospace,Menlo,Consolas,monospace;color:#b9bdc9;position:relative;z-index:1;word-break:break-word}
+.motd[hidden],.who[hidden]{display:none}
+.motd div{min-height:1.4em}
+.mc-icon{image-rendering:pixelated}
+.who{grid-column:1/-1;margin-top:0;position:relative;z-index:1;text-align:left}
+.who-label{font:600 .76rem var(--ui);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.who ul{list-style:none;display:flex;flex-wrap:wrap;gap:6px}
+.who li{font:500 .8rem var(--ui);padding:4px 10px;background:var(--glass-2);border:1px solid var(--stroke);border-radius:8px}
+
+/* ---------- sections ---------- */
+section{position:relative;z-index:1;padding:clamp(44px,7vw,88px) clamp(16px,5vw,56px);max-width:1240px;margin:auto}
+.section-head{margin-bottom:32px}
+h2{font-size:clamp(1.85rem,4vw,2.9rem);margin-bottom:10px}
+.section-head p{color:var(--muted);max-width:60ch}
+.faq-kicker{display:inline-flex;align-items:center;gap:8px;margin-bottom:12px;color:color-mix(in srgb,var(--accent) 78%,#fff);
+  font:700 .74rem var(--ui);letter-spacing:.16em;text-transform:uppercase}
+.faq-kicker::before{content:"";width:20px;height:2px;background:var(--accent);border-radius:2px}
+
+/* ---------- live chat card ---------- */
+.chat-section{padding-top:clamp(14px,3vw,30px)}
+.chat-section[hidden]{display:none}
+.chat-section .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:22px}
+.chat-badge{display:inline-flex;align-items:center;gap:8px;font:600 .76rem var(--ui);letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);padding:7px 13px;border-radius:99px;background:var(--glass);border:1px solid var(--stroke)}
+.chat-badge .dot{width:7px;height:7px}
+.chat-badge.live .dot{background:#3ddc84;box-shadow:0 0 0 3px color-mix(in srgb,#3ddc84 22%,transparent)}
+.chat-badge.live{color:var(--text)}
+.chat-card{padding:clamp(18px,3vw,26px);display:grid;gap:16px}
+.chat-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.chat-title{font:400 1.1rem var(--head);margin-right:auto;display:flex;align-items:center;gap:10px}
+.chat-title .live-dot{width:8px;height:8px;border-radius:50%;background:#3ddc84;box-shadow:0 0 0 3px color-mix(in srgb,#3ddc84 20%,transparent)}
+.chip{display:inline-flex;align-items:center;gap:6px;font:600 .76rem var(--ui);letter-spacing:.04em;color:var(--muted);
+  background:var(--glass-2);border:1px solid var(--stroke);border-radius:99px;padding:6px 12px;white-space:nowrap}
+.chip b{color:var(--text);font-weight:700}
+.chat-list{list-style:none;display:grid;gap:2px;max-height:300px;overflow:auto;padding-right:4px;scrollbar-width:thin}
+.chat-list::-webkit-scrollbar{width:6px}
+.chat-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:99px}
+.chat-msg{display:grid;grid-template-columns:auto auto 1fr;gap:10px;align-items:baseline;padding:9px 12px;border-radius:12px;font-size:.94rem;min-width:0}
+.chat-msg:nth-child(odd){background:rgba(255,255,255,.028)}
+.chat-msg time{color:var(--muted);font:500 .74rem var(--ui);font-variant-numeric:tabular-nums;opacity:.8}
+.chat-msg b{font-family:var(--ui);font-weight:600;color:color-mix(in srgb,var(--accent) 70%,#fff);max-width:22ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chat-msg span{overflow-wrap:anywhere;min-width:0;color:#d7dae3}
+.chat-msg.system{grid-template-columns:auto 1fr;color:var(--muted)}
+.chat-msg.system b{display:none}
+.chat-empty{color:var(--muted);font-size:.92rem;padding:18px 6px;text-align:center}
+.chat-foot{display:flex;align-items:center;gap:12px;flex-wrap:wrap;border-top:1px solid var(--stroke);padding-top:14px}
+.chat-foot p{color:var(--muted);font-size:.82rem;max-width:62ch;margin-right:auto}
+.chat-foot a{font:600 .84rem var(--ui);text-decoration:none;color:var(--text);background:var(--glass-2);border:1px solid var(--stroke);
+  padding:9px 14px;border-radius:11px;backdrop-filter:blur(12px)}
+.chat-foot a:hover{border-color:var(--stroke-2)}
+.chat-setup{display:grid;gap:10px;font-size:.9rem;color:var(--muted)}
+.chat-setup code{font:500 .8rem ui-monospace,Menlo,Consolas,monospace;background:rgba(0,0,0,.35);border:1px solid var(--stroke);
+  border-radius:8px;padding:2px 7px;color:#cfd3dd;overflow-wrap:anywhere}
+
+/* ---------- players ---------- */
+.players-section .section-head{max-width:620px}
+.players-dashboard{display:grid;grid-template-columns:minmax(220px,.7fr) 1.3fr;gap:16px}
+.player-total,.player-roster{position:relative;overflow:hidden;padding:clamp(22px,4vw,34px);background:var(--glass);
+  border:1px solid var(--stroke);border-radius:var(--radius);backdrop-filter:blur(var(--blur));-webkit-backdrop-filter:blur(var(--blur))}
+.player-total{display:flex;flex-direction:column;justify-content:center;min-height:220px}
+.player-total::before{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:var(--accent)}
+.player-total-label,.player-roster-title{color:var(--muted);font:600 .82rem var(--ui);letter-spacing:.08em;text-transform:uppercase}
+.player-total-count{margin:12px 0 4px;font:400 clamp(2.6rem,6vw,4.1rem)/1 var(--head);font-variant-numeric:tabular-nums}
+.player-total-count span:last-child{color:var(--muted);font-size:.58em}
+.player-total-note{color:var(--muted);font-size:.9rem}
+.player-total .bar{margin-top:22px}
+.player-community{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:14px;min-height:220px}
+.player-community p{max-width:42ch;color:var(--muted);line-height:1.7}
+
+/* ---------- features: premium bento ---------- */
+.features{--f-accent:var(--accent);--f-accent-2:var(--accent2);
+  --f-line:color-mix(in srgb,var(--accent) 12%,#242831);--f-line-2:color-mix(in srgb,var(--accent) 28%,#333A47);
+  --f-card:transparent;--f-card-hover:transparent;--f-text:#F2F4F8;--f-muted:#8A93A6;--f-bg:transparent}
+.features-panel{background:transparent;border:0;border-radius:0;
+  padding:clamp(18px,3vw,36px);box-shadow:none}
+.features-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;
+  margin-bottom:clamp(18px,2.4vw,26px);padding-bottom:clamp(14px,2vw,20px);
+  border-bottom:1px solid color-mix(in srgb,var(--accent) 14%,var(--stroke))}
+.features-kicker{display:inline-flex;align-items:center;gap:9px;font:700 .7rem var(--ui);
+  letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.features-kicker::before{content:"";width:18px;height:2px;border-radius:2px;background:var(--accent)}
+.features-head h2{font-family:"Space Grotesk",var(--body);font-weight:700;letter-spacing:-.02em;color:var(--f-text);
+  font-size:clamp(1.7rem,3.4vw,2.5rem);margin-bottom:8px}
+.features-head p{color:var(--f-muted);font-size:.96rem;max-width:56ch}
+.features-live{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:99px;
+  border:1px solid var(--f-line);background:#111318;color:var(--f-muted);font:600 .76rem var(--ui);white-space:nowrap}
+.features-live .dot{width:7px;height:7px;border-radius:50%;background:#3DDC84;box-shadow:0 0 0 3px rgba(61,220,132,.16);
+  animation:livePulse 2.6s infinite ease-in-out}
+@keyframes livePulse{
+  0%,100%{box-shadow:0 0 0 3px rgba(61,220,132,.16)}
+  50%{box-shadow:0 0 0 7px rgba(61,220,132,.05)}}
+.features-live b{color:var(--f-text)}
+
+.bento{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:14px;grid-auto-flow:row dense}
+.bento-card{position:relative;display:flex;flex-direction:column;min-width:0;overflow:hidden;
+  background:transparent;border:1px solid color-mix(in srgb,var(--accent) 10%,var(--stroke));border-radius:16px;padding:22px;
+  transition:border-color .25s ease,transform .25s ease,box-shadow .3s ease}
+.bento-card::before{content:"";position:absolute;left:18%;right:18%;top:0;height:1px;pointer-events:none;
+  background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--accent) 65%,transparent),transparent);
+  opacity:.45;transition:opacity .25s ease}
+.bento-card:hover{border-color:color-mix(in srgb,var(--accent) 42%,transparent);transform:translateY(-3px);
+  box-shadow:0 22px 46px -26px color-mix(in srgb,var(--accent) 55%,transparent)}
+.bento-card:hover::before{opacity:1}
+.bento-card--large{grid-column:span 7;grid-row:span 2}
+.bento-card--medium{grid-column:span 5}
+.bento-card--small{grid-column:span 4}
+.bento-card--half{grid-column:span 6}
+.bento-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;min-width:0}
+.bento-icon{display:grid;place-items:center;width:38px;height:38px;flex:none;border-radius:10px;
+  color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 34%,transparent)}
+.bento-icon svg{width:19px;height:19px;stroke-width:1.7}
+.bento-tag{margin-left:auto;font:600 .64rem var(--ui);letter-spacing:.1em;text-transform:uppercase;
+  color:color-mix(in srgb,var(--accent) 72%,#fff);
+  border:1px solid color-mix(in srgb,var(--accent) 26%,transparent);
+  background:color-mix(in srgb,var(--accent) 8%,transparent);
+  border-radius:99px;padding:4px 9px;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;max-width:12ch}
+.bento-body{min-width:0}
+.bento-card h3{font-family:"Space Grotesk",var(--body);font-size:1.08rem;font-weight:600;letter-spacing:-.01em;
+  color:var(--f-text);margin-bottom:6px}
+.bento-card--large h3{font-size:clamp(1.3rem,2.2vw,1.6rem)}
+.bento-body p{color:var(--f-muted);font-size:.9rem;line-height:1.55;max-width:46ch}
+.bento-card--large .bento-body p{font-size:.95rem;max-width:42ch}
+.bento-visual{margin-top:auto;padding-top:16px;min-width:0}
+.world,.econ,.lives,.arena,.guard{transition:border-color .25s ease}
+.bento-card:hover .world,.bento-card:hover .econ,.bento-card:hover .lives,
+.bento-card:hover .arena,.bento-card:hover .guard{border-color:color-mix(in srgb,var(--accent) 34%,var(--stroke))}
+
+/* store showcase - replaces the old game-mode feature grid */
+.showcase-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.showcase-card{position:relative;display:flex;flex-direction:column;gap:8px;padding:22px;border-radius:16px;
+  text-decoration:none;color:var(--f-text);
+  background:linear-gradient(158deg,color-mix(in srgb,var(--accent) 12%,rgba(255,255,255,.03)),rgba(255,255,255,.02));
+  border:1px solid color-mix(in srgb,var(--accent) 16%,var(--stroke));
+  transition:transform .25s ease,border-color .25s ease,box-shadow .3s ease}
+.showcase-card:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--accent) 46%,transparent);
+  box-shadow:0 22px 46px -26px color-mix(in srgb,var(--accent) 55%,transparent)}
+.showcase-tag{font:700 .64rem var(--ui);letter-spacing:.12em;text-transform:uppercase;
+  color:color-mix(in srgb,var(--accent) 80%,#fff)}
+.showcase-card h3{font-family:"Space Grotesk",var(--body),system-ui,sans-serif;font-size:1.15rem;font-weight:600;
+  letter-spacing:-.01em;color:var(--f-text);margin:0}
+.showcase-card p{color:var(--f-muted);font-size:.9rem;line-height:1.55;margin:0}
+.showcase-go{margin-top:auto;padding-top:6px;font:700 .8rem var(--ui);
+  color:color-mix(in srgb,var(--accent) 85%,#fff)}
+
+/* store search + most popular rank (index page) */
+.store-searchbar{display:flex;gap:10px;margin:4px 0 16px}
+.store-searchbar input{flex:1;min-width:0;padding:13px 16px;border-radius:13px;border:1px solid var(--stroke);
+  background:rgba(255,255,255,.04);color:var(--f-text);font:500 .95rem var(--body)}
+.store-searchbar input::placeholder{color:color-mix(in srgb,var(--f-muted) 88%,transparent)}
+.store-searchbar input:focus{outline:none;border-color:color-mix(in srgb,var(--accent) 62%,var(--stroke));
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 16%,transparent)}
+.search-results{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:10px;margin-bottom:16px}
+.search-hit{display:grid;gap:4px;padding:13px 15px;border-radius:13px;text-decoration:none;color:var(--f-text);
+  background:rgba(255,255,255,.025);border:1px solid var(--stroke);transition:transform .2s ease,border-color .2s ease}
+.search-hit:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--accent) 48%,var(--stroke))}
+.search-hit .hit-kind{font:700 .62rem var(--ui);letter-spacing:.12em;text-transform:uppercase;
+  color:color-mix(in srgb,var(--accent) 82%,#fff)}
+.search-hit b{font:600 1rem var(--body);overflow-wrap:anywhere}
+.search-hit .hit-price{font:600 .82rem var(--ui);color:var(--f-muted)}
+.search-empty{color:var(--f-muted);font-size:.9rem;margin:0 0 14px}
+.popular-rank{display:grid;gap:10px;padding:22px;border-radius:18px;margin-top:6px;
+  background:linear-gradient(158deg,color-mix(in srgb,var(--accent) 16%,rgba(255,255,255,.03)),rgba(255,255,255,.02));
+  border:1px solid color-mix(in srgb,var(--accent) 32%,var(--stroke))}
+.popular-tag{font:700 .64rem var(--ui);letter-spacing:.12em;text-transform:uppercase;
+  color:color-mix(in srgb,var(--accent) 82%,#fff)}
+.popular-rank h3{font-family:"Space Grotesk",var(--body),system-ui,sans-serif;font-size:1.45rem;font-weight:600;
+  letter-spacing:-.01em;margin:0;color:var(--f-text);overflow-wrap:anywhere}
+.popular-rank p{color:var(--f-muted);font-size:.92rem;margin:0}
+.popular-rank ul{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:2px 0;padding:0}
+.popular-rank li{font:600 .78rem var(--ui);color:var(--f-text);padding:5px 11px;border-radius:99px;
+  background:color-mix(in srgb,var(--accent) 12%,transparent);border:1px solid color-mix(in srgb,var(--accent) 26%,var(--stroke))}
+.popular-foot{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:2px}
+.popular-price{font-family:"Space Grotesk",var(--body);font-size:1.35rem;font-weight:600;color:var(--f-text)}
+.popular-foot .btn{padding:11px 20px;min-height:42px;font-size:.86rem;border-radius:11px}
+@media (max-width:520px){.search-results{grid-template-columns:1fr}}
+
+/* survival: world preview */
+.world{background:transparent;border:1px solid color-mix(in srgb,var(--accent) 12%,#20242C);border-radius:12px;padding:12px}
+.world-map{display:block;width:100%;flex:1;min-height:200px;max-height:340px;object-fit:cover;object-position:center;
+  border-radius:8px;border:1px solid color-mix(in srgb,var(--accent) 16%,#20242C)}
+.bento-card--large .bento-visual{flex:1;display:flex;align-items:stretch;min-height:0}
+.bento-card--large .world{flex:1;display:flex;flex-direction:column;min-height:0}
+.bento-card--large .world-grid{flex:1;grid-auto-rows:1fr}
+.bento-card--large .world-grid .cell{aspect-ratio:auto;min-height:16px}
+.world-grid{display:grid;grid-template-columns:repeat(14,1fr);gap:3px}
+.world-grid .cell{display:block;min-width:0;aspect-ratio:1;border-radius:3px;background:#1B1F26}
+.cell--grass{background:#2C5F45}
+.cell--water{background:#1E3A6E}
+.cell--stone{background:#2A2F38}
+.cell--tree{background:#3E8E5A}
+.cell--path{background:#423A30}
+.world-stats{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.wstat{flex:1 1 0;min-width:0;padding:8px 10px;border:1px solid #20242C;border-radius:9px;background:#0E1014}
+.wstat span{display:block;color:var(--f-muted);font:600 .6rem var(--ui);letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px}
+.wstat b{color:var(--f-text);font:600 .86rem var(--ui)}
+
+/* economy */
+.econ{background:transparent;border:1px solid color-mix(in srgb,var(--accent) 12%,#20242C);border-radius:12px;padding:14px}
+.econ-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.econ-label{color:var(--f-muted);font:600 .64rem var(--ui);letter-spacing:.1em;text-transform:uppercase}
+.econ-delta{color:#3DDC84;font:600 .72rem var(--ui);border:1px solid rgba(61,220,132,.3);
+  background:rgba(61,220,132,.1);border-radius:99px;padding:3px 8px}
+.econ-value{display:flex;align-items:baseline;gap:6px;margin:8px 0 12px;
+  font:600 1.6rem/1 "Space Grotesk",var(--body);color:var(--f-text)}
+.econ-value span{font:600 .68rem var(--ui);letter-spacing:.08em;text-transform:uppercase;color:var(--f-muted)}
+.econ-chart{display:flex;align-items:flex-end;gap:5px;height:44px}
+.econ-chart i{flex:1;display:block;border-radius:3px 3px 0 0;background:var(--accent);opacity:.85}
+.econ-chart i:nth-child(even){opacity:.55}
+.econ-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;
+  padding-top:10px;border-top:1px solid #20242C;color:var(--f-muted);font:600 .72rem var(--ui)}
+.econ-foot b{color:var(--f-text)}
+
+/* lifesteal */
+.lives{background:transparent;border:1px solid color-mix(in srgb,var(--accent) 12%,#20242C);border-radius:12px;padding:12px}
+.lives-bar{display:flex;gap:4px}
+.lives-bar i{flex:1;height:22px;border-radius:5px;background:color-mix(in srgb,var(--accent) 20%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 48%,transparent)}
+.lives-bar i.is-empty{background:#1B1F26;border-color:#232A33}
+.lives-note{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px;
+  color:var(--f-muted);font:600 .72rem var(--ui)}
+.lives-note b{color:var(--f-text)}
+
+/* ffa pvp */
+.arena{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;background:transparent;
+  border:1px solid color-mix(in srgb,var(--accent) 12%,#20242C);border-radius:12px;padding:12px}
+.arena-team{text-align:center;padding:6px 4px;border-radius:8px;border:1px solid #232A33;background:transparent;min-width:0;overflow:hidden}
+.arena-team b{display:block;font:600 .78rem var(--ui);color:var(--f-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.arena-team span{font:600 .6rem var(--ui);letter-spacing:.08em;text-transform:uppercase;color:var(--f-muted)}
+.arena-vs{font:700 .68rem var(--ui);letter-spacing:.1em;color:var(--accent);
+  border:1px solid color-mix(in srgb,var(--accent) 42%,transparent);
+  background:color-mix(in srgb,var(--accent) 14%,transparent);border-radius:99px;padding:5px 8px}
+
+/* daily rewards */
+.streak{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.streak-day{display:grid;place-items:center;min-width:0;aspect-ratio:1;border-radius:8px;border:1px solid #232A33;
+  background:#101216;color:var(--f-muted);font:600 .72rem var(--ui)}
+.streak-day.is-done{background:color-mix(in srgb,var(--accent) 18%,transparent);
+  border-color:color-mix(in srgb,var(--accent) 50%,transparent);color:var(--f-text)}
+.streak-day.is-today{background:var(--accent);border-color:var(--accent2);color:var(--on-accent)}
+.streak-note{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;
+  color:var(--f-muted);font:600 .72rem var(--ui)}
+.streak-note b{color:var(--f-text)}
+
+/* anti-grief */
+.guard{background:transparent;border:1px solid color-mix(in srgb,var(--accent) 12%,#20242C);border-radius:12px;padding:12px}
+.guard-status{display:flex;align-items:center;gap:8px;padding-bottom:10px;border-bottom:1px solid #20242C}
+.guard-status .dot{width:7px;height:7px;border-radius:50%;background:#3DDC84;box-shadow:0 0 0 3px rgba(61,220,132,.16)}
+.guard-status b{color:var(--f-text);font:600 .8rem var(--ui)}
+.guard-status span{margin-left:auto;font:700 .6rem var(--ui);letter-spacing:.1em;color:#3DDC84;
+  border:1px solid rgba(61,220,132,.3);background:rgba(61,220,132,.1);border-radius:99px;padding:3px 7px}
+.guard-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:8px;
+  color:var(--f-muted);font:600 .72rem var(--ui)}
+.guard-row b{color:var(--f-text);font-weight:600}
+
+/* weekly events */
+.events{display:grid;gap:6px}
+.event-row{display:flex;align-items:center;gap:10px;padding:8px 10px;
+  border:1px solid color-mix(in srgb,var(--accent) 12%,#20242C);border-radius:9px;background:transparent;min-width:0}
+.event-day{flex:none;width:34px;text-align:center;font:700 .6rem var(--ui);letter-spacing:.08em;text-transform:uppercase;
+  color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 32%,transparent);
+  background:color-mix(in srgb,var(--accent) 12%,transparent);border-radius:6px;padding:4px 0}
+.event-name{color:var(--f-text);font:600 .78rem var(--ui);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.event-time{margin-left:auto;color:var(--f-muted);font:600 .68rem var(--ui);white-space:nowrap}
+
+@media (max-width:1024px){
+  .bento{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .bento-card--large{grid-column:span 6;grid-row:span 1}
+  .bento-card--medium{grid-column:span 3}
+  .bento-card--small{grid-column:span 2}
+  .bento-card--half{grid-column:span 6}
+}
+@media (max-width:760px){
+  .features-panel{padding:16px;border-radius:20px}
+  .bento{grid-template-columns:minmax(0,1fr);gap:12px}
+  .bento-card,.bento-card--large,.bento-card--medium,.bento-card--small,.bento-card--half{grid-column:span 1;grid-row:auto}
+  .bento-card{padding:16px}
+  .bento-card--large h3{font-size:1.2rem}
+  .features-live{order:-1}
+}
+
+/* join */
+.join ol{list-style:none;counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:24px}
+.join li{counter-increment:s;padding:20px 0 0;border-top:1px solid var(--stroke);color:var(--muted)}
+.join li::before{content:counter(s,decimal-leading-zero);display:block;font:400 2.4rem var(--head);color:color-mix(in srgb,var(--accent) 84%,#fff);margin-bottom:6px}
+
+/* faq */
+.faq{max-width:1000px}
+.faq-heading{margin-bottom:28px}
+.faq h2{margin-bottom:10px}
+.faq-intro{max-width:58ch;color:var(--muted)}
+.faq-list{display:grid;max-width:820px;margin:0 auto;gap:10px;counter-reset:faq}
+.faq details{position:relative;overflow:hidden;background:var(--glass);border:1px solid var(--stroke);border-radius:16px;counter-increment:faq;
+  backdrop-filter:blur(var(--blur));-webkit-backdrop-filter:blur(var(--blur));transition:border-color .25s,background .25s,transform .25s}
+.faq details:hover{border-color:var(--stroke-2);transform:translateY(-2px)}
+.faq details[open]{border-color:color-mix(in srgb,var(--accent) 40%,var(--stroke));background:var(--glass-2)}
+.faq summary{list-style:none;display:flex;justify-content:flex-start;align-items:center;gap:18px;padding:18px 20px;font:600 1.05rem var(--ui);min-height:68px}
+.faq summary::before{content:counter(faq,decimal-leading-zero);flex:none;color:color-mix(in srgb,var(--accent) 76%,#fff);font:600 .76rem var(--ui);letter-spacing:.08em}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"";flex:none;width:9px;height:9px;margin-left:auto;margin-right:8px;border-right:2px solid var(--accent);border-bottom:2px solid var(--accent);
+  transform:rotate(45deg);transition:transform .3s var(--ease)}
+.faq details[open] summary::after{transform:rotate(225deg)}
+.faq summary:hover{color:var(--text)}
+.faq summary:focus-visible{outline-offset:-4px;border-radius:14px}
+.faq-answer-wrap{display:grid;grid-template-rows:0fr;transition:grid-template-rows .38s var(--ease)}
+.faq details[open] .faq-answer-wrap{grid-template-rows:1fr}
+.faq-answer-inner{overflow:hidden;min-height:0}
+.faq .ans{padding:0 64px 0 58px;color:var(--muted);max-width:76ch;line-height:1.8;opacity:0;transform:translateY(-6px);transition:opacity .25s,transform .3s var(--ease),padding .38s var(--ease)}
+.faq details[open] .ans{padding-bottom:20px;opacity:1;transform:none;transition-delay:.08s}
+
+/* discord cta */
+.discord{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px;margin:20px auto 70px;
+  background:var(--glass);border:1px solid var(--stroke);border-radius:var(--radius);
+  backdrop-filter:blur(var(--blur));-webkit-backdrop-filter:blur(var(--blur))}
+.discord p{color:var(--muted);max-width:52ch}
+
+/* ---------- footer ---------- */
+footer.site-footer{position:relative;z-index:1;margin-top:clamp(16px,3vw,40px);border-top:1px solid var(--stroke);
+  background:rgba(255,255,255,.02);backdrop-filter:blur(20px) saturate(140%);-webkit-backdrop-filter:blur(20px) saturate(140%)}
+.footer-inner{max-width:1240px;margin:auto;padding:clamp(34px,5vw,60px) clamp(16px,5vw,56px) clamp(24px,3vw,34px);
+  display:flex;flex-wrap:wrap;gap:28px;justify-content:space-between;align-items:flex-end}
+.footer-brand{min-width:0;flex:1 1 340px}
+.footer-kicker{font:700 .72rem var(--ui);letter-spacing:.18em;text-transform:uppercase;
+  color:color-mix(in srgb,var(--accent) 78%,#fff);margin-bottom:12px}
+.footer-name{font-family:var(--head);font-size:clamp(2.3rem,7.4vw,4.8rem);line-height:.98;letter-spacing:-.01em;
+  overflow-wrap:anywhere;color:var(--text);margin-bottom:14px;max-width:20ch}
+.footer-note{color:var(--muted);font-size:.88rem;max-width:48ch}
+.footer-meta{display:grid;gap:14px;justify-items:end;margin-left:auto;flex:0 1 auto;min-width:0}
+.footer-links{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
+.footer-links a{text-decoration:none;font:600 .84rem var(--ui);color:var(--text);background:var(--glass);
+  border:1px solid var(--stroke);padding:9px 14px;border-radius:11px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  transition:border-color .2s,background .2s}
+.footer-links a:hover{border-color:var(--stroke-2);background:var(--glass-2)}
+.footer-copy{color:var(--muted);font-size:.82rem;letter-spacing:.02em;text-align:right}
+@media (max-width:820px){
+  .footer-inner{align-items:flex-start}
+  .footer-meta{justify-items:start;margin-left:0;width:100%}
+  .footer-links{justify-content:flex-start}
+  .footer-copy{text-align:left}
+}
+
+/* sticky mobile bar */
+.sticky-bar{display:none}
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);opacity:0;pointer-events:none;z-index:60;
+  background:rgba(20,21,28,.75);color:var(--text);border:1px solid var(--stroke-2);padding:10px 20px;border-radius:12px;font-weight:600;
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);transition:.25s}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* entrance + reveal */
+.anim .hero-text>*{opacity:0;transform:translateY(22px);animation:rise .7s var(--ease) forwards}
+.anim .hero-text>*:nth-child(1){animation-delay:.05s}.anim .hero-text>*:nth-child(2){animation-delay:.14s}
+.anim .hero-text>*:nth-child(3){animation-delay:.26s}.anim .hero-text>*:nth-child(4){animation-delay:.38s}
+.anim .hero-text>*:nth-child(5){animation-delay:.5s}
+.anim .hero-text>*:nth-child(6){animation-delay:.6s}.anim .hero-text>*:nth-child(7){animation-delay:.7s}
+.anim .stage{opacity:0;animation:slidein .9s .3s var(--ease) forwards}
+@keyframes rise{to{opacity:1;transform:none}}
+@keyframes slidein{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
+.anim .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s var(--ease)}
+.anim .reveal.in{opacity:1;transform:none}
+
+/* ---------- responsive ---------- */
+@media (max-width:900px){
+  .players-dashboard{grid-template-columns:1fr}
+  .player-total{min-height:190px}
+}
+@media (max-width:820px){
+  .hero{grid-template-columns:1fr;gap:34px}
+  #nav,.mini-copy{display:none}
+  .top{justify-content:flex-start}
+  .faq summary{padding:16px 15px;font-size:1rem}
+  .faq .ans{padding-right:40px;padding-left:42px}
+  .chat-msg{grid-template-columns:auto 1fr;gap:8px}
+  .chat-msg b{grid-column:1/-1;max-width:none}
+  .chat-msg time{grid-row:2}
+  .has-sticky .sticky-bar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:25;gap:10px;
+    padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:rgba(10,11,17,.72);
+    backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-top:1px solid var(--stroke)}
+  .has-sticky .sticky-bar .btn:first-child{flex:1}
+  .has-sticky .footer-inner{padding-bottom:110px}
+}
+/* ---------- ascendant light background ---------- */
+.light-layer{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden;contain:paint;
+  background:
+    radial-gradient(ellipse 72% 58% at 50% -12%,color-mix(in srgb,var(--accent) 6%,transparent),transparent 68%),
+    radial-gradient(ellipse 60% 48% at 88% 108%,color-mix(in srgb,var(--accent2) 4%,transparent),transparent 72%)}
+.light-layer::before,.light-layer::after{content:"";position:absolute;border-radius:50%;pointer-events:none;
+  filter:blur(56px);will-change:transform}
+.light-layer::before{width:72vmax;height:72vmax;left:-20vmax;top:-26vmax;
+  background:radial-gradient(circle,color-mix(in srgb,var(--accent) 16%,transparent),transparent 68%);
+  animation:auroraA 52s infinite ease-in-out alternate}
+.light-layer::after{width:64vmax;height:64vmax;right:-22vmax;bottom:-28vmax;
+  background:radial-gradient(circle,color-mix(in srgb,var(--accent2) 12%,transparent),transparent 68%);
+  animation:auroraB 68s infinite ease-in-out alternate}
+@keyframes auroraA{
+  0%{transform:translate3d(0,0,0) scale(1)}
+  100%{transform:translate3d(13vw,9vh,0) scale(1.18)}}
+@keyframes auroraB{
+  0%{transform:translate3d(0,0,0) scale(1.14)}
+  100%{transform:translate3d(-11vw,-7vh,0) scale(1)}}
+.light-scale{position:absolute;inset:-12%;animation:lightBreathe 24s infinite ease-in-out;will-change:transform}
+@keyframes lightBreathe{
+  0%,100%{transform:scale(1) translate3d(0,0,0)}
+  50%{transform:scale(1.09) translate3d(0,-1.5%,0)}}
+.light-ray{position:absolute;top:-20%;left:50%;width:330%;height:165%;transform:translateX(-50%);
+  background:linear-gradient(45deg,transparent 40%,color-mix(in srgb,var(--accent) 11%,transparent) 48%,color-mix(in srgb,var(--accent) 11%,transparent) 52%,transparent 60%);
+  -webkit-mask-image:radial-gradient(ellipse at 50% -20%,black 20%,transparent 70%);
+  mask-image:radial-gradient(ellipse at 50% -20%,black 20%,transparent 70%);
+  animation:panLight 18s infinite ease-in-out;will-change:transform}
+.light-ray.two{animation-duration:13s;animation-direction:reverse}
+@keyframes panLight{
+  0%,100%{transform:translateX(-50%) rotate(-42deg)}
+  50%{transform:translateX(-50%) rotate(42deg)}}
+.mote-container{position:absolute;inset:0;pointer-events:none}
+.mote{position:absolute;width:4px;height:4px;border-radius:50%;opacity:.5;
+  background:color-mix(in srgb,var(--accent) 45%,#fff);box-shadow:0 0 10px color-mix(in srgb,var(--accent) 70%,#fff);
+  animation:floatMote 10s infinite linear}
+@keyframes floatMote{
+  0%{transform:translate3d(0,110vh,0) rotate(0deg);opacity:0}
+  10%{opacity:.7}
+  90%{opacity:.7}
+  100%{transform:translate3d(100px,-10vh,0) rotate(360deg);opacity:0}}
+@media (prefers-reduced-motion:reduce){.light-ray,.mote,.light-layer::before,.light-layer::after{animation:none}.light-layer{opacity:.55}}
+
+/* ---------- liquid glass buttons ---------- */
+.btn,.store-btn,.shop-cta,.mini-copy,.page-tabs a{position:relative;isolation:isolate;overflow:hidden;
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease),filter .25s var(--ease),background .2s,border-color .2s}
+.btn::before,.store-btn::before,.shop-cta::before,.mini-copy::before{content:"";position:absolute;inset:0;border-radius:inherit;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.45),inset 0 -1px 0 rgba(255,255,255,.14);pointer-events:none;z-index:3}
+.btn::after,.store-btn::after,.shop-cta::after,.mini-copy::after,.page-tabs a::after{content:"";position:absolute;
+  left:var(--gx,50%);top:var(--gy,50%);width:140%;padding-top:140%;border-radius:50%;
+  transform:translate(-50%,-50%) scale(var(--gs,0));background:rgba(255,255,255,.34);filter:blur(18px);
+  opacity:.42;pointer-events:none;z-index:-1;transition:transform .45s var(--ease)}
+.btn:hover,.store-btn:hover,.shop-cta:hover,.mini-copy:hover,.page-tabs a:hover{--gs:1}
+.btn:active,.store-btn:active,.shop-cta:active,.mini-copy:active,.page-tabs a:active{transform:translateY(1px) scale(.975)}
+
+
+@media (max-width:820px){
+  .has-sticky .sticky-bar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:25;gap:10px;
+    padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:rgba(10,11,17,.72);
+    backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-top:1px solid var(--stroke)}
+  .has-sticky .sticky-bar .btn:first-child{flex:1}
+  .has-sticky .footer-inner{padding-bottom:110px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .anim .hero-text>*,.anim .stage,.anim .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top">
+  <a class="brand" href="#top" aria-label="Home">
+    <img id="logo" alt="" class="logo">
+    <span id="brandName"></span>
+  </a>
+  <nav id="nav" aria-label="Main"></nav>
+  <button class="mini-copy" id="navCopy" type="button"><span id="navIp"></span><b>Copy</b></button>
+  <a class="store-btn" id="storeBtn" href="store.html">Store</a>
+</header>
+
+<main id="main">
+  <section class="hero" id="top">
+    <div class="hero-text">
+      <div class="status" id="status"><span class="dot"></span><span id="statusText">Checking…</span></div>
+      <h1 id="heroName"></h1>
+      <p id="heroTagline" class="lead"></p>
+      <div class="ipbox">
+        <code id="ipText"></code>
+        <button id="copyBtn" type="button"></button>
+      </div>
+      <a id="heroDiscord" class="btn ghost" target="_blank" rel="noopener"></a>
+
+      <div class="live-stats" id="liveStats">
+        <div class="stat">
+          <span class="stat-value" id="statPlayers">–</span>
+          <span class="stat-label" id="statPlayersLabel">players online</span>
+        </div>
+        <div class="stat" id="statDiscord">
+          <span class="stat-value" id="statMembers">–</span>
+          <span class="stat-label">Discord members</span>
+          <span class="stat-sub" id="statPresence" hidden></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="hero-live loading" id="live" aria-live="polite">
+        <div class="live-card-heading">Live player count</div>
+        <img id="heroLogo" alt="" class="hero-logo">
+        <div class="live-summary">
+          <div class="counter">
+            <span id="playersNow" class="sk">–</span><span class="slash">/</span><span id="playersMax" class="sk">–</span>
+          </div>
+          <div class="counter-label" id="playersLabel"></div>
+        </div>
+        <div class="bar" role="progressbar" aria-label="Server capacity"><i id="playersBar"></i></div>
+        <div class="motd" id="motd" hidden></div>
+        <div class="who" id="who" hidden>
+          <div class="who-label" id="whoLabel"></div>
+          <ul id="whoList"></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chat-section" id="liveChat" hidden>
+    <div class="section-head">
+      <div>
+        <p class="faq-kicker">Straight from the server</p>
+        <h2 id="chatTitle">Live chat</h2>
+        <p id="chatSubtitle">What players are saying in-game right now, refreshed automatically.</p>
+      </div>
+      <span class="chat-badge" id="chatBadge"><span class="dot"></span><span id="chatBadgeText">Connecting…</span></span>
+    </div>
+    <div class="chat-card glass">
+      <div class="chat-top">
+        <span class="chat-title"><span class="live-dot" id="chatDot"></span>Server chat</span>
+        <span class="chip">Players <b id="chatPlayers">–</b></span>
+        <span class="chip">Uptime <b id="chatUptime">–</b></span>
+      </div>
+      <ul class="chat-list" id="chatList" aria-live="polite"></ul>
+      <div class="chat-foot">
+        <p id="chatHint">Live chat, player count and uptime come from the driftStore plugin.</p>
+        <a id="chatDiscord" target="_blank" rel="noopener">Join Discord</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="players-section" id="onlinePlayers">
+    <div class="section-head">
+      <p class="faq-kicker">Live server activity</p>
+      <h2>Server activity</h2>
+      <p>Check the current player count and see who's exploring the server.</p>
+    </div>
+    <div class="players-dashboard">
+      <div class="player-total" aria-live="polite">
+        <div class="player-total-label">Players online</div>
+        <div class="player-total-count"><span id="onlinePlayersNow">–</span><span> / <span id="onlinePlayersMax">–</span></span></div>
+        <div class="player-total-note" id="onlinePlayersNote">Checking server status…</div>
+        <div class="bar" role="progressbar" aria-label="Online player capacity"><i id="onlinePlayersBar"></i></div>
+      </div>
+      <div class="player-roster player-community">
+        <h3 class="player-roster-title">Join our Discord</h3>
+        <p>Chat with the community, get help, and keep up with server news.</p>
+        <a class="btn" id="onlineDiscord" target="_blank" rel="noopener">Join Discord</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="storeShowcase" class="features">
+    <div class="features-panel">
+      <div class="features-head">
+        <div>
+          <p class="features-kicker">Server store</p>
+          <h2>Ranks, coins &amp; crate keys</h2>
+          <p>Support the server and unlock perks, balance and crate keys - everything is delivered to your account automatically.</p>
+        </div>
+        <span class="features-live"><span class="dot"></span><b id="featuresPlayers">–</b> players online</span>
+      </div>
+      <div class="showcase-grid" id="showcaseGrid"></div>
+    </div>
+  </section>
+
+  <section id="storeSearch" class="features store-search-section">
+    <div class="features-panel">
+      <div class="features-head">
+        <div>
+          <p class="features-kicker">Find anything</p>
+          <h2>Search the store</h2>
+          <p>Type a name to jump straight to a rank, coin pack or key bundle.</p>
+        </div>
+      </div>
+      <form class="store-searchbar" id="searchForm" role="search">
+        <input id="searchInput" type="search" placeholder="Search ranks, coins, keys…" autocomplete="off" aria-label="Search the store">
+      </form>
+      <div id="searchResults" class="search-results" hidden></div>
+      <div id="popularRank" class="popular-rank" hidden></div>
+    </div>
+  </section>
+
+  <section id="join" class="join">
+    <h2 id="joinTitle"></h2>
+    <ol id="joinSteps"></ol>
+  </section>
+
+  <section id="faq" class="faq">
+    <div class="faq-heading">
+      <p class="faq-kicker">Help center</p>
+      <h2 id="faqTitle"></h2>
+      <p class="faq-intro">Quick answers to help you get started and join the server.</p>
+    </div>
+    <div id="faqList" class="faq-list"></div>
+  </section>
+
+  <section id="discord" class="discord">
+    <div>
+      <h2 id="discordTitle"></h2>
+      <p id="discordText"></p>
+    </div>
+    <a id="discordBtn" class="btn" target="_blank" rel="noopener"></a>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <p class="footer-kicker">Minecraft server</p>
+      <h2 class="footer-name" id="footerName"></h2>
+      <p class="footer-note" id="footerText"></p>
+    </div>
+    <div class="footer-meta">
+      <nav class="footer-links" id="footerLinks" aria-label="Footer"></nav>
+      <p class="footer-copy" id="footerCopy"></p>
+    </div>
+  </div>
+</footer>
+
+<div class="sticky-bar" id="stickyBar">
+  <button id="stickyCopy" type="button" class="btn"></button>
+  <a id="stickyDiscord" class="btn ghost" target="_blank" rel="noopener"></a>
+</div>
+
+<div class="custom-cursor" id="customCursor" aria-hidden="true"></div>
+<div class="toast" id="toast" role="status"></div>
+<script type="application/json" id="advanced-config">
+{
+  "server": {
+    "name": "Example MC",
+    "tagline": "Fun, easy and friendly Minecraft survival for everyone.",
+    "bedrock": false,
+    "refreshSeconds": 30
+  },
+  "discord": {
+    "title": "Join our Discord",
+    "text": "Chat with players, get support, win giveaways and hear about updates first."
+  },
+  "favicon": "",
+  "useServerIcon": true,
+  "showMotd": true,
+  "animations": true,
+  "tilt": true,
+  "stickyMobileBar": true,
+  "theme": {
+    "default": "red",
+    "options": {
+      "red": {
+        "label": "Red",
+        "accent": "#ff3b3b",
+        "accent2": "#ff7a45"
+      },
+      "blue": {
+        "label": "Blue",
+        "accent": "#3b82ff",
+        "accent2": "#22d3ee"
+      },
+      "white": {
+        "label": "White",
+        "accent": "#f2f2f2",
+        "accent2": "#b8b8c0"
+      },
+      "yellow": {
+        "label": "Yellow",
+        "accent": "#ffd23f",
+        "accent2": "#ff9f1c"
+      },
+      "purple": {
+        "label": "Purple",
+        "accent": "#a855f7",
+        "accent2": "#ec4899"
+      },
+      "pink": {
+        "label": "Pink",
+        "accent": "#ec4899",
+        "accent2": "#f472b6"
+      },
+      "orange": {
+        "label": "Orange",
+        "accent": "#f97316",
+        "accent2": "#fbbf24"
+      },
+      "green": {
+        "label": "Green",
+        "accent": "#22c55e",
+        "accent2": "#84cc16"
+      },
+      "lime": {
+        "label": "Lime",
+        "accent": "#a3e635",
+        "accent2": "#4ade80"
+      },
+      "teal": {
+        "label": "Teal",
+        "accent": "#14b8a6",
+        "accent2": "#22d3ee"
+      },
+      "cyan": {
+        "label": "Cyan",
+        "accent": "#22d3ee",
+        "accent2": "#3b82f6"
+      },
+      "indigo": {
+        "label": "Indigo",
+        "accent": "#6366f1",
+        "accent2": "#a855f7"
+      },
+      "magenta": {
+        "label": "Magenta",
+        "accent": "#d946ef",
+        "accent2": "#ec4899"
+      },
+      "gold": {
+        "label": "Gold",
+        "accent": "#eab308",
+        "accent2": "#f59e0b"
+      },
+      "crimson": {
+        "label": "Crimson",
+        "accent": "#dc2626",
+        "accent2": "#f97316"
+      },
+      "slate": {
+        "label": "Slate",
+        "accent": "#94a3b8",
+        "accent2": "#64748b"
+      }
+    }
+  },
+  "hero": {
+    "joinButton": "Copy server IP",
+    "discordButton": "Join Discord",
+    "playersLabel": "players online right now",
+    "onlineText": "Server online",
+    "offlineText": "Server offline",
+    "copiedText": "IP copied!",
+    "whoLabel": "details"
+  },
+  "show": {
+    "features": true,
+    "howToJoin": true,
+    "faq": true,
+    "discord": true
+  },
+  "featuresTitle": "Server features",
+  "featuresSubtitle": "Everything you need for a great adventure.",
+  "features": [
+    {
+      "icon": "gift",
+      "title": "Daily rewards",
+      "text": "Log in every day for crates, keys and free items.",
+      "wide": true
+    },
+    {
+      "icon": "shield",
+      "title": "Anti-grief",
+      "text": "Active staff and rollback tools keep the server fair.",
+      "wide": true
+    },
+    {
+      "icon": "party",
+      "title": "Weekly events",
+      "text": "Build contests, PvP tournaments and seasonal events.",
+      "wide": false
+    }
+  ],
+  "howToJoin": {
+    "title": "How to join",
+    "steps": [
+      "Open Minecraft (Java or Bedrock).",
+      "Go to Multiplayer and click Add Server.",
+      "Paste the server IP and press Join."
+    ]
+  },
+  "faqTitle": "Questions, answered",
+  "faq": [
+    {
+      "q": "Can Bedrock players join?",
+      "a": "No."
+    },
+    {
+      "q": "Do I need to be whitelisted?",
+      "a": "No. Copy the IP, add the server in Multiplayer and you can join straight away."
+    },
+    {
+      "q": "How do I get help or report a player?",
+      "a": "Join our Discord and open a ticket. Staff are active every day."
+    },
+    {
+      "q": "Is the server free to play?",
+      "a": "Yes. Everything needed to enjoy the server is free."
+    }
+  ],
+  "footer": {
+    "text": "Not affiliated with Mojang or Microsoft.",
+    "links": [
+      {
+        "label": "Discord",
+        "url": "https://discord.gg/S763GafZPR"
+      }
+    ]
+  },
+  "nav": [
+    {
+      "label": "Discord",
+      "discord": true
+    }
+  ]
+}
+</script>
+<script>
+// Loads config.json and the advanced settings embedded in this page.
+const $ = id => document.getElementById(id);
+const EMBEDDED = null;   // (used only by the single-file preview)
+/* editor.html opens this page with ?preview=1 and hands over the unsaved site.json + store.json */
+const PREVIEW  = /(?:^|[?&])preview=1(?:&|$)/.test(location.search);
+function previewDoc(name){
+  if(!PREVIEW) return null;
+  try{
+    const shared=window.parent!==window && window.parent[name];
+    return shared ? JSON.parse(JSON.stringify(shared)) : null;
+  }catch(error){ return null; }
+}
+
+const FALLBACK = {
+  server:{name:"Example MC",tagline:"Edit config.json to customise this page.",ip:"play.examplemc.fun",bedrock:false,bedrockPort:19132,refreshSeconds:30},
+  logo:"",favicon:"",animations:true,tilt:true,stickyMobileBar:true,useServerIcon:true,showMotd:true,
+  discord:{link:"https://discord.gg/S763GafZPR",title:"Join our Discord",text:"Chat with players and get support."},
+  theme:{default:"blue",options:{red:{label:"Red",accent:"#ff3b3b",accent2:"#ff7a45"},blue:{label:"Blue",accent:"#3b82ff",accent2:"#22d3ee"},yellow:{label:"Yellow",accent:"#ffd23f",accent2:"#ff9f1c"},purple:{label:"Purple",accent:"#a855f7",accent2:"#ec4899"},white:{label:"White",accent:"#f2f2f2",accent2:"#b8b8c0"},pink:{label:"Pink",accent:"#ec4899",accent2:"#f472b6"},orange:{label:"Orange",accent:"#f97316",accent2:"#fbbf24"},green:{label:"Green",accent:"#22c55e",accent2:"#84cc16"},lime:{label:"Lime",accent:"#a3e635",accent2:"#4ade80"},teal:{label:"Teal",accent:"#14b8a6",accent2:"#22d3ee"},cyan:{label:"Cyan",accent:"#22d3ee",accent2:"#3b82f6"},indigo:{label:"Indigo",accent:"#6366f1",accent2:"#a855f7"},magenta:{label:"Magenta",accent:"#d946ef",accent2:"#ec4899"},gold:{label:"Gold",accent:"#eab308",accent2:"#f59e0b"},crimson:{label:"Crimson",accent:"#dc2626",accent2:"#f97316"},slate:{label:"Slate",accent:"#94a3b8",accent2:"#64748b"}}},
+  hero:{joinButton:"Copy server IP",discordButton:"Join Discord",playersLabel:"players online right now",onlineText:"Server online",offlineText:"Server offline",copiedText:"IP copied!",whoLabel:"Who’s online"},
+  show:{features:true,howToJoin:true,faq:true,discord:true},
+  nav:[{label:"Discord",discord:true}],
+  featuresTitle:"Server features",featuresSubtitle:"",features:[],howToJoin:{title:"How to join",steps:[]},faqTitle:"FAQ",faq:[],footer:{text:"",links:[]}
+};
+
+/* site.json defaults - used when the file is missing or a key is left out */
+const DEFAULT_SITE = {
+  floatingNavbar:false,
+  enableStoreButton:true,
+  pages:{ranks:true,coins:true,keys:true},
+  hero:{liveStats:true,discord:{enabled:true,inviteCode:"",refreshSeconds:300}},
+  liveChat:{enabled:true,title:"Live chat",subtitle:"What players are saying in-game right now, refreshed automatically.",refreshSeconds:12,maxMessages:40},
+  gameModes:["survival","lifesteal","ffa","economy"]
+};
+/* store.json defaults - the store search only needs the currency and the item lists */
+const DEFAULT_STORE = { currency:{default:"INR",base:"INR",options:{INR:{label:"INR",symbol:"₹",decimals:0,rate:1}}}, pages:{ranks:{},coins:{cards:[]},keys:{cards:[]}}, ranks:[] };
+
+async function readJSON(path){
+  const response=await fetch(path,{cache:"no-store"});
+  if(!response.ok) throw new Error(path+": "+response.status);
+  return await response.json();
+}
+
+function mergeConfig(advanced,simple,site,store){
+  const base=advanced||{};
+  const s=simple||{};
+  const fb=FALLBACK;
+  const ed={...DEFAULT_SITE,...(site||{})};
+  ed.pages={...DEFAULT_SITE.pages,...((site&&site.pages)||{})};
+  ed.hero={...DEFAULT_SITE.hero,...((site&&site.hero)||{})};
+  ed.hero.discord={...DEFAULT_SITE.hero.discord,...(((site&&site.hero)||{}).discord||{})};
+  ed.liveChat={...DEFAULT_SITE.liveChat,...(((site||{}).liveChat)||{})};
+  const modeIds=Array.isArray(ed.gameModes)?ed.gameModes:Object.keys(GAME_MODES);
+  ed.gameModes=modeIds.filter(id=>GAME_MODES[id]);
+  const modeFeatures=ed.gameModes.map(id=>GAME_MODES[id]);
+
+  const themeOptions=(base.theme&&base.theme.options)||fb.theme.options;
+  /* config.json defaultColour drives the colour on BOTH index.html and store.html */
+  const wantedColour=String(s.defaultColour||"").trim().toLowerCase();
+  const colourKey=Object.keys(themeOptions).find(key=>key.toLowerCase()===wantedColour);
+  const defaultColour=colourKey||fb.theme.default;
+  const discordLink=s.discordLink||fb.discord.link;
+  const baseFaq=(base.faq&&base.faq.length)?base.faq:fb.faq;
+  const bedrockAnswer=s.bedrockPlayersCanJoin===true
+    ? `Bedrock players can join at ${s.serverIp||fb.server.ip} using port ${s.bedrockPort||fb.server.bedrockPort}.`
+    : "This server is for Java Edition players. Bedrock players cannot join.";
+  const faq=baseFaq.map(item=>item.q==="Can Bedrock players join?"?{...item,a:bedrockAnswer}:item);
+  const footer={...fb.footer,...(base.footer||{})};
+
+  return {
+    ...fb,
+    ...base,
+    server:{
+      ...fb.server,
+      ...(base.server||{}),
+      name:s.serverName||(base.server&&base.server.name)||fb.server.name,
+      ip:s.serverIp||fb.server.ip,
+      bedrock:(base.server&&base.server.bedrock)===true,
+      bedrockPort:s.bedrockPort||fb.server.bedrockPort
+    },
+    logo:s.logoPath||base.logo||fb.logo,
+    favicon:base.favicon||s.logoPath||fb.favicon,
+    discord:{...fb.discord,...(base.discord||{}),link:discordLink},
+    theme:{...fb.theme,...(base.theme||{}),options:themeOptions,default:defaultColour},
+    hero:{...fb.hero,...(base.hero||{})},
+    show:{...fb.show,...(base.show||{})},
+    featuresTitle:base.featuresTitle||fb.featuresTitle,
+    featuresSubtitle:base.featuresSubtitle||"",
+    features:[...modeFeatures,
+      ...(base.features||[]).filter(feature=>!isModeFeature(feature))],
+    howToJoin:{...fb.howToJoin,...(base.howToJoin||{})},
+    faqTitle:base.faqTitle||fb.faqTitle,
+    faq,
+    footer:{
+      ...footer,
+      links:(footer.links||[]).map(link=>String(link.label||"").toLowerCase()==="discord"
+        ? {...link,url:discordLink}
+        : link)
+    },
+    nav:base.nav||fb.nav,
+    editor:ed,
+    store:{...DEFAULT_STORE,...(store||{})}
+  };
+}
+
+async function loadConfig(){
+  if(EMBEDDED) return EMBEDDED;
+  let advanced=null;
+  try{ advanced=JSON.parse($("advanced-config").textContent); }catch(e){ console.warn("Embedded advanced settings could not be read.",e); }
+  const [simple,site,store]=await Promise.all([
+    readJSON("config.json").catch(e=>{
+      console.warn("Could not load config.json - using defaults. Host the folder (or use Live Server) so config.json can load.",e);
+      return null;
+    }),
+    readJSON("site.json").catch(e=>{
+      console.warn("Could not load site.json - using built-in site defaults.",e);
+      return null;
+    }),
+    readJSON("store.json").catch(e=>{
+      console.warn("Could not load store.json - the store search will be empty.",e);
+      return null;
+    })
+  ]);
+  return mergeConfig(advanced,previewDoc("__mcConfigDoc")||simple,previewDoc("__mcSiteDoc")||site,previewDoc("__mcStoreDoc")||store);
+}
+
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+function toast(msg){
+  const t=$("toast"); t.textContent=msg; t.classList.add("show");
+  clearTimeout(toast.id); toast.id=setTimeout(()=>t.classList.remove("show"),1800);
+}
+
+/* ---------- theme: the colour always comes from config.json -> defaultColour ---------- */
+function applyTheme(cfg){
+  const options=cfg.theme.options||{};
+  const o=options[cfg.theme.default]||options.blue||{accent:"#3b82ff",accent2:"#22d3ee"};
+  const root=document.documentElement.style;
+  root.setProperty("--accent",o.accent); root.setProperty("--accent2",o.accent2||o.accent);
+  const hex=String(o.accent||"").replace("#","");
+  const n=parseInt(hex.length===3?hex.replace(/./g,"$&$&"):hex,16);
+  const lum=Number.isFinite(n)?0.299*(n>>16)+0.587*((n>>8)&255)+0.114*(n&255):0;
+  root.setProperty("--on-accent",lum>150?"#0a0a0c":"#ffffff");
+  const meta=document.querySelector('meta[name="theme-color"]');
+  if(meta) meta.setAttribute("content",o.accent);
+}
+
+/* ---------- icons (inline SVG; use these names in config.json, or an emoji / image path) ---------- */
+const ICONS={"pickaxe": "M14 6l4 4M4 20l8-8M13.5 4.5c3.5-1 6.5 0 8 1.5-1.5-.5-3.5-.5-5 1M12 7c-3 0-5.5 1.5-7 4M17 11c0 3-1.5 5.5-4 7", "coins": "M12 5c-4 0-7 1.1-7 2.5S8 10 12 10s7-1.1 7-2.5S16 5 12 5zM5 7.5v4C5 12.9 8 14 12 14s7-1.1 7-2.5v-4M5 11.5v4C5 16.9 8 18 12 18s7-1.1 7-2.5v-4", "home": "M4 11l8-7 8 7M6 10v9h12v-9M10 19v-5h4v5", "gift": "M4 9h16v4H4zM6 13v7h12v-7M12 9v11M12 9c-1.5-3-5-3.5-5-1.5S10 9 12 9zM12 9c1.5-3 5-3.5 5-1.5S14 9 12 9z", "shield": "M12 3l7 3v5c0 5-3 8.5-7 10-4-1.5-7-5-7-10V6zM9 12l2 2 4-4", "party": "M4 20l5-12 7 7zM13 5l1 2M17 8l2-1M16 3v2M19 12l2 .5", "sword": "M5 19l9-9M14 10l5-5v-1h-1l-5 5M7 17l-2 2M9 15l-2 2", "heart": "M12 20s-7-4.5-7-10a4 4 0 017-2.5A4 4 0 0119 10c0 5.5-7 10-7 10z", "users": "M9 11a3 3 0 100-6 3 3 0 000 6zM3 19c0-3 2.5-5 6-5s6 2 6 5M16 5a3 3 0 010 6M18 14c2 .5 3 2 3 5", "star": "M12 4l2.5 5 5.5.8-4 3.9.9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-3.9 5.5-.8z", "trophy": "M8 4h8v5a4 4 0 01-8 0zM8 6H5v1a3 3 0 003 3M16 6h3v1a3 3 0 01-3 3M12 13v4M8 20h8M10 17h4", "map": "M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14", "bolt": "M13 3L5 13h6l-1 8 8-10h-6z", "chat": "M4 5h16v11H9l-5 4z", "cube": "M12 3l8 4.5v9L12 21l-8-4.5v-9zM12 12l8-4.5M12 12L4 7.5M12 12v9"};
+function iconEl(name,box){
+  if(ICONS[name]){
+    const ns='http://www.w3.org/2000/svg', s=document.createElementNS(ns,'svg');
+    s.setAttribute('viewBox','0 0 24 24'); s.setAttribute('fill','none'); s.setAttribute('stroke','currentColor');
+    s.setAttribute('stroke-width','1.8'); s.setAttribute('stroke-linecap','round'); s.setAttribute('stroke-linejoin','round'); s.setAttribute('aria-hidden','true');
+    const p=document.createElementNS(ns,'path'); p.setAttribute('d',ICONS[name]); s.appendChild(p); box.appendChild(s);
+  } else if(/\.(png|jpe?g|gif|svg|webp)$/i.test(name||'')){
+    const im=document.createElement('img'); im.src=name; im.alt=''; box.appendChild(im);
+  } else { box.textContent=name||''; box.setAttribute('aria-hidden','true'); }
+}
+
+/* ---------- features: bento grid ---------- */
+const FEATURE_ICONS={
+  survival:'<path d="m14 13-7.5 7.5a2.12 2.12 0 0 1-3-3L11 10"/><path d="m16 16 6-6"/><path d="m8 8 6-6"/><path d="m9 7 8 8"/><path d="m21 11-8-8"/>',
+  lifesteal:'<path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/><path d="M7 10h2l1-2 1 4 1-2h2"/>',
+  ffa:'<path d="m5 19 9-9"/><path d="M14 10l5-5v-1h-1l-5 5"/><path d="m7 17-2 2"/><path d="m15 5-1 3 2 2 3-1"/>',
+  economy:'<circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/>',
+  claims:'<path d="M14.1 5.5a2 2 0 0 0 1.8 0l3.6-1.8A1 1 0 0 1 21 4.6v12.8a1 1 0 0 1-.6.9l-4.5 2.3a2 2 0 0 1-1.8 0l-4.2-2.1a2 2 0 0 0-1.8 0l-3.7 1.8A1 1 0 0 1 3 19.4V6.6a1 1 0 0 1 .6-.9l4.5-2.3a2 2 0 0 1 1.8 0z"/><path d="M15 5.8v15"/><path d="M9 3.2v15"/>',
+  rewards:'<rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/>',
+  antigrief:'<path d="M20 13c0 5-3.5 7.5-7.7 9a1 1 0 0 1-.7 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.2-2.7a1.2 1.2 0 0 1 1.5 0C14.5 3.8 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>',
+  events:'<path d="M5.8 11.3 2 22l10.7-3.8"/><path d="M4 3h.01"/><path d="M22 8h.01"/><path d="M15 2h.01"/><path d="M22 20h.01"/>',
+  fallback:'<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 9h6v6H9z"/>'
+};
+const FEATURE_META={
+  survival:{layout:"large",tag:"Game mode"},
+  lifesteal:{layout:"medium",tag:"Game mode"},
+  ffa:{layout:"small",tag:"Game mode"},
+  economy:{layout:"small",tag:"Game mode"},
+  rewards:{layout:"small",tag:"Rewards"},
+  antigrief:{layout:"half",tag:"Security"},
+  events:{layout:"half",tag:"Community"}
+};
+
+/* game modes - the editor picks which of these cards show (site.json -> gameModes) */
+const GAME_MODES={
+  survival:{icon:"pickaxe",title:"Survival",text:"Classic survival: build, mine and explore a world that keeps growing."},
+  lifesteal:{icon:"heart",title:"Lifesteal",text:"Every kill steals a heart. Climb the leaderboard before you run out."},
+  ffa:{icon:"sword",title:"FFA PvP",text:"Jump into the arena and fight anyone, anywhere, at any time."},
+  economy:{icon:"coins",title:"Economy",text:"Earn coins, run player shops and trade with the whole server."}
+};
+
+function featureKey(feature){
+  const icon=String(feature&&feature.icon||"").toLowerCase();
+  const title=String(feature&&feature.title||"").toLowerCase();
+  const rules=[
+    ["pickaxe","survival"],["survival","survival"],
+    ["coin","economy"],["econom","economy"],
+    ["heart","lifesteal"],["life","lifesteal"],
+    ["sword","ffa"],["ffa","ffa"],["pvp","ffa"],["arena","ffa"],
+    ["home","claims"],["claim","claims"],["map","claims"],
+    ["gift","rewards"],["reward","rewards"],
+    ["shield","antigrief"],["anti","antigrief"],["grief","antigrief"],
+    ["party","events"],["event","events"]
+  ];
+  for(const [needle,key] of rules){
+    if(icon.includes(needle)||title.includes(needle)) return key;
+  }
+  return "";
+}
+
+/* mode cards are built from GAME_MODES, so drop any matching duplicate from config */
+function isModeFeature(feature){
+  return ["survival","lifesteal","ffa","economy","claims"].includes(featureKey(feature)) ||
+    /claim/i.test(String(feature&&feature.title||""));
+}
+
+function nodeEl(tag,cls,text){
+  const node=document.createElement(tag);
+  if(cls) node.className=cls;
+  if(text!==undefined) node.textContent=text;
+  return node;
+}
+
+function worldVisual(){
+  const wrap=nodeEl("div","world");
+  const map=document.createElement("img");
+  map.className="world-map";
+  map.src="assets/world-map.webp";
+  map.alt="Rendered map of the survival world";
+  map.loading="lazy";
+  map.decoding="async";
+  map.decoding="async";
+  wrap.appendChild(map);
+  const stats=nodeEl("div","world-stats");
+  [["World","20k × 20k"],["Difficulty","Hard"],["Season","4"]].forEach(([label,value])=>{
+    const stat=nodeEl("div","wstat");
+    stat.appendChild(nodeEl("span",null,label));
+    stat.appendChild(nodeEl("b",null,value));
+    stats.appendChild(stat);
+  });
+  wrap.appendChild(stats);
+  return wrap;
+}
+
+function economyVisual(){
+  const wrap=nodeEl("div","econ");
+  const top=nodeEl("div","econ-top");
+  top.appendChild(nodeEl("span","econ-label","Server balance"));
+  top.appendChild(nodeEl("span","econ-delta","+18.4%"));
+  wrap.appendChild(top);
+
+  const value=nodeEl("div","econ-value");
+  value.appendChild(document.createTextNode("12,480"));
+  value.appendChild(nodeEl("span",null,"coins"));
+  wrap.appendChild(value);
+
+  const chart=nodeEl("div","econ-chart");
+  [38,62,48,74,58,86,68].forEach(height=>{
+    const bar=nodeEl("i");
+    bar.style.height=height+"%";
+    chart.appendChild(bar);
+  });
+  wrap.appendChild(chart);
+
+  const foot=nodeEl("div","econ-foot");
+  foot.appendChild(nodeEl("span",null,"Top seller"));
+  foot.appendChild(nodeEl("b",null,"Alex · 4,200"));
+  wrap.appendChild(foot);
+  return wrap;
+}
+
+function lifestealVisual(){
+  const wrap=nodeEl("div","lives");
+  const bar=nodeEl("div","lives-bar");
+  for(let index=0;index<7;index++){
+    bar.appendChild(nodeEl("i",index<5?"":"is-empty"));
+  }
+  wrap.appendChild(bar);
+  const note=nodeEl("div","lives-note");
+  note.appendChild(nodeEl("span",null,"5 of 7 hearts"));
+  note.appendChild(nodeEl("b",null,"+2 this session"));
+  wrap.appendChild(note);
+  return wrap;
+}
+
+function ffaVisual(){
+  const wrap=nodeEl("div","arena");
+  const left=nodeEl("div","arena-team");
+  left.appendChild(nodeEl("span",null,"Red"));
+  left.appendChild(nodeEl("b",null,"4 players"));
+  wrap.appendChild(left);
+  wrap.appendChild(nodeEl("span","arena-vs","VS"));
+  const right=nodeEl("div","arena-team");
+  right.appendChild(nodeEl("span",null,"Blue"));
+  right.appendChild(nodeEl("b",null,"3 players"));
+  wrap.appendChild(right);
+  return wrap;
+}
+
+function rewardsVisual(){
+  const wrap=nodeEl("div");
+  const streak=nodeEl("div","streak");
+  ["M","T","W","T","F","S","S"].forEach((day,index)=>{
+    const state=index<4?" is-done":index===4?" is-today":"";
+    streak.appendChild(nodeEl("span","streak-day"+state,day));
+  });
+  wrap.appendChild(streak);
+  const note=nodeEl("div","streak-note");
+  note.appendChild(nodeEl("span",null,"Day 5 streak"));
+  note.appendChild(nodeEl("b",null,"2 to go"));
+  wrap.appendChild(note);
+  return wrap;
+}
+
+function guardVisual(){
+  const wrap=nodeEl("div","guard");
+  const status=nodeEl("div","guard-status");
+  status.appendChild(nodeEl("i","dot"));
+  status.appendChild(nodeEl("b",null,"Protection active"));
+  status.appendChild(nodeEl("span",null,"ON"));
+  wrap.appendChild(status);
+  [["Block logging","Enabled"],["Rollbacks","Instant"],["Staff","24/7"]].forEach(([label,value])=>{
+    const row=nodeEl("div","guard-row");
+    row.appendChild(nodeEl("span",null,label));
+    row.appendChild(nodeEl("b",null,value));
+    wrap.appendChild(row);
+  });
+  return wrap;
+}
+
+function eventsVisual(){
+  const wrap=nodeEl("div","events");
+  [["Fri","Build contest","8 PM"],["Sat","PvP tournament","9 PM"],["Sun","Drop party","7 PM"]].forEach(([day,name,time])=>{
+    const row=nodeEl("div","event-row");
+    row.appendChild(nodeEl("span","event-day",day));
+    row.appendChild(nodeEl("span","event-name",name));
+    row.appendChild(nodeEl("span","event-time",time));
+    wrap.appendChild(row);
+  });
+  return wrap;
+}
+
+function featureVisual(key){
+  if(key==="survival") return worldVisual();
+  if(key==="economy") return economyVisual();
+  if(key==="lifesteal") return lifestealVisual();
+  if(key==="ffa") return ffaVisual();
+  if(key==="rewards") return rewardsVisual();
+  if(key==="antigrief") return guardVisual();
+  if(key==="events") return eventsVisual();
+  return null;
+}
+
+function buildFeatureCard(feature,index){
+  const key=featureKey(feature);
+  const meta=FEATURE_META[key]||{layout:feature&&feature.wide?"large":"medium",tag:""};
+  const card=nodeEl("article","bento-card bento-card--"+meta.layout+" reveal");
+  card.style.transitionDelay=Math.min(index,5)*60+"ms";
+  card.addEventListener("transitionend",()=>{card.style.transitionDelay=""},{once:true});
+
+  const head=nodeEl("div","bento-head");
+  const icon=nodeEl("span","bento-icon");
+  icon.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" '+
+    'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(FEATURE_ICONS[key]||FEATURE_ICONS.fallback)+'</svg>';
+  head.appendChild(icon);
+  if(meta.tag) head.appendChild(nodeEl("span","bento-tag",meta.tag));
+  card.appendChild(head);
+
+  const body=nodeEl("div","bento-body");
+  body.appendChild(nodeEl("h3",null,feature&&feature.title?feature.title:"Feature"));
+  body.appendChild(nodeEl("p",null,feature&&feature.text?feature.text:""));
+  card.appendChild(body);
+
+  const visual=featureVisual(key);
+  if(visual){
+    const wrap=nodeEl("div","bento-visual");
+    wrap.appendChild(visual);
+    card.appendChild(wrap);
+  }
+  return card;
+}
+
+function buildBento(features){
+  const grid=document.getElementById("featureGrid");
+  if(!grid) return;
+  grid.innerHTML="";
+  features.forEach((feature,index)=>grid.appendChild(buildFeatureCard(feature||{},index)));
+}
+
+/* the store showcase links straight to the store pages */
+const SHOWCASE=[
+  {tag:"Perks",title:"Ranks",text:"Coloured names, extra homes, fly and more - pick the tier that fits you.",page:"ranks"},
+  {tag:"Balance",title:"Coins",text:"Top up in-game coins and spend them in shops, auctions and cosmetics.",page:"coins"},
+  {tag:"Crates",title:"Crate keys",text:"Unlock common, rare and legendary crates with key bundles.",page:"keys"}
+];
+function buildShowcase(){
+  const grid=document.getElementById("showcaseGrid");
+  if(!grid) return;
+  grid.innerHTML="";
+  SHOWCASE.forEach(item=>{
+    const card=nodeEl("a","showcase-card reveal");
+    card.href=storeUrl(item.page);
+    card.appendChild(nodeEl("span","showcase-tag",item.tag));
+    card.appendChild(nodeEl("h3",null,item.title));
+    card.appendChild(nodeEl("p",null,item.text));
+    card.appendChild(nodeEl("span","showcase-go","Open store →"));
+    grid.appendChild(card);
+  });
+}
+
+/* ---------- store search + most popular rank (reads store.json) ---------- */
+function searchSlug(value){
+  return String(value||"").toLowerCase().trim().replace(/\+/g,"-plus").replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"");
+}
+function storeDetailUrl(page,slug){
+  if(location.protocol==="file:") return "store.html?page="+page+"&item="+encodeURIComponent(slug||"");
+  return storeUrl(page)+"/"+(slug||"");
+}
+function searchPrice(item,currency){
+  const price=item&&item.price;
+  const options=(currency&&currency.options)||{};
+  const base=(currency&&currency.base)||"INR";
+  const opt=options[base]||{symbol:"₹",decimals:0};
+  let amount=null;
+  if(price&&typeof price==="object"&&!Array.isArray(price)){
+    const key=(price[base]!==undefined)?base:Object.keys(price)[0];
+    if(key!==undefined) amount=Number(price[key]);
+  }else if(price!=null&&price!==""){
+    amount=Number(String(price).replace(/[^0-9.\-]/g,""));
+  }
+  if(!Number.isFinite(amount)) return typeof price==="string"?price:"";
+  const decimals=Number.isInteger(opt.decimals)?opt.decimals:0;
+  return (opt.symbol||"")+amount.toLocaleString("en-US",{minimumFractionDigits:decimals,maximumFractionDigits:decimals});
+}
+async function setupStoreSearch(cfg){
+  const section=$("storeSearch");
+  if(!section) return;
+  const store=(cfg&&cfg.store)||DEFAULT_STORE;
+
+  const currency=store.currency||DEFAULT_STORE.currency;
+  const ranks=Array.isArray(store.ranks)?store.ranks:[];
+  const cardsFor=id=>{
+    const page=(store.pages||{})[id];
+    return (page&&Array.isArray(page.cards))?page.cards:[];
+  };
+  const groups=[
+    {id:"ranks",label:"Rank",items:ranks},
+    {id:"coins",label:"Coins",items:cardsFor("coins")},
+    {id:"keys",label:"Keys",items:cardsFor("keys")}
+  ].filter(group=>group.items.length);
+
+  if(!groups.length){ section.hidden=true; return; }
+  section.hidden=false;
+
+  /* the most popular rank: the featured one, or the first */
+  const popular=ranks.find(rank=>rank&&rank.featured)||ranks[0];
+  const popularBox=$("popularRank");
+  if(popular&&popularBox){
+    popularBox.innerHTML="";
+    popularBox.appendChild(nodeEl("span","popular-tag","Most popular rank"));
+    popularBox.appendChild(nodeEl("h3",null,popular.name||"Rank"));
+    if(popular.tagline||popular.description) popularBox.appendChild(nodeEl("p",null,popular.tagline||popular.description));
+    const perks=(Array.isArray(popular.perks)?popular.perks:[]).filter(perk=>String(perk||"").trim()).slice(0,4);
+    if(perks.length){
+      const list=nodeEl("ul");
+      perks.forEach(perk=>list.appendChild(nodeEl("li",null,String(perk))));
+      popularBox.appendChild(list);
+    }
+    const foot=nodeEl("div","popular-foot");
+    const price=searchPrice(popular,currency);
+    if(price) foot.appendChild(nodeEl("span","popular-price",price));
+    const link=nodeEl("a","btn","View rank");
+    link.href=storeDetailUrl("ranks",searchSlug(popular.name));
+    foot.appendChild(link);
+    popularBox.appendChild(foot);
+    popularBox.hidden=false;
+  }
+
+  const hits=$("searchResults"), input=$("searchInput"), form=$("searchForm");
+  if(!hits||!input) return;
+  const all=[];
+  groups.forEach(group=>group.items.forEach((item,index)=>{
+    all.push({group,item,slug:searchSlug(item&&item.name)||("item-"+(index+1)),
+      name:String((item&&item.name)||""),text:String((item&&(item.tagline||item.description))||"")});
+  }));
+
+  const draw=()=>{
+    const query=input.value.trim();
+    hits.innerHTML="";
+    if(!query){ hits.hidden=true; return; }
+    const needle=query.toLowerCase();
+    const matches=all.filter(hit=>(hit.name+" "+hit.text).toLowerCase().includes(needle)).slice(0,12);
+    if(!matches.length){
+      hits.appendChild(nodeEl("p","search-empty","Nothing matches \""+query+"\". Try a rank name, coins or keys."));
+      hits.hidden=false;
+      return;
+    }
+    matches.forEach(hit=>{
+      const link=nodeEl("a","search-hit");
+      link.href=storeDetailUrl(hit.group.id,hit.slug);
+      link.appendChild(nodeEl("span","hit-kind",hit.group.label));
+      link.appendChild(nodeEl("b",null,hit.name||"Item"));
+      const price=searchPrice(hit.item,currency);
+      if(price) link.appendChild(nodeEl("span","hit-price",price));
+      hits.appendChild(link);
+    });
+    hits.hidden=false;
+  };
+  input.addEventListener("input",draw);
+  if(form) form.addEventListener("submit",event=>{ event.preventDefault(); draw(); });
+}
+
+/* ---------- copy IP ---------- */
+async function copyIp(cfg){
+  const ip=cfg.server.ip;
+  try{await navigator.clipboard.writeText(ip)}catch(e){
+    const t=document.createElement("textarea");t.value=ip;document.body.appendChild(t);t.select();document.execCommand("copy");t.remove()}
+  toast(cfg.hero.copiedText||"Copied");
+}
+
+/* ---------- content ---------- */
+/* store pages live at /store/<page> (see store.html) */
+function storeUrl(page){
+  if(location.protocol==="file:") return page?"store.html?page="+page:"store.html";
+  const path=location.pathname;
+  const idx=path.toLowerCase().indexOf("/store/");
+  const base=idx>=0?path.slice(0,idx):path.slice(0,path.lastIndexOf("/")+1);
+  /* "all" is the browse page, which lives at /store itself */
+  if(page==="all") return (base||"/")+"store";
+  return (base||"/")+"store/"+(page||"ranks");
+}
+function fill(cfg){
+  const s=cfg.server,h=cfg.hero,sh=cfg.show||{};
+  document.title=s.name+" – Minecraft Server";
+  $("brandName").textContent=s.name; $("heroName").textContent=s.name; $("heroTagline").textContent=s.tagline;
+  $("ipText").textContent=s.ip; $("navIp").textContent=s.ip;
+  $("copyBtn").textContent=h.joinButton; $("stickyCopy").textContent=h.joinButton;
+  $("playersLabel").textContent=h.playersLabel; $("whoLabel").textContent=h.whoLabel||"Who’s online";
+  if(cfg.favicon) $("favicon").href=cfg.favicon;
+  ["logo","heroLogo"].forEach(id=>{
+    const i=$(id);
+    /* no logo file configured: stay hidden until the live server icon arrives */
+    if(!cfg.logo){ i.style.display="none"; return; }
+    i.src=cfg.logo; i.onerror=()=>i.style.display="none";
+  });
+  ["copyBtn","navCopy","stickyCopy"].forEach(id=>$(id).onclick=()=>copyIp(cfg));
+
+  const d=cfg.discord;
+  ["heroDiscord","discordBtn","stickyDiscord","onlineDiscord"].forEach(id=>$(id).href=d.link);
+  $("heroDiscord").textContent=h.discordButton; $("stickyDiscord").textContent="Discord"; $("discordBtn").textContent=d.title;
+  $("discordTitle").textContent=d.title; $("discordText").textContent=d.text;
+
+  const nav=$("nav"); nav.innerHTML="";
+  (cfg.nav||[]).forEach(n=>{
+    if(!n) return;
+    /* the store no longer has media / vote pages - skip stale links to them */
+    if(n.store==="media"||n.store==="vote") return;
+    const a=document.createElement("a");
+    a.textContent=n.label;
+    if(n.store){ a.href=storeUrl(n.store); }
+    else if(n.discord){ a.href=d.link; a.target="_blank"; a.rel="noopener noreferrer"; }
+    else if(n.url){ a.href=n.url; a.target="_blank"; a.rel="noopener noreferrer"; }
+    else { a.href="#"+n.target; a.dataset.t=n.target; }
+    nav.appendChild(a);
+  });
+
+  /* store button (site.json -> enableStoreButton + pages): the Store link on the right of the navbar */
+  const ed=cfg.editor||DEFAULT_SITE, pages=ed.pages||{};
+  const storeOn=ed.enableStoreButton!==false && pages.ranks!==false;
+  document.body.classList.toggle("store-on",storeOn);
+  $("storeBtn").href=storeUrl("all");
+
+  $("storeShowcase").style.display = (sh.store===false||sh.features===false)?"none":"";
+  $("storeSearch").style.display  = (sh.store===false)?"none":"";
+  $("join").style.display     = sh.howToJoin===false?"none":"";
+  $("faq").style.display      = (sh.faq===false||!(cfg.faq||[]).length)?"none":"";
+  $("discord").style.display  = sh.discord===false?"none":"";
+  document.body.classList.toggle("has-sticky",cfg.stickyMobileBar!==false);
+
+  /* hero extras (site.json -> hero) */
+  const hv=cfg.editor.hero||DEFAULT_SITE.hero;
+  $("liveStats").hidden=hv.liveStats===false;
+  $("statPlayersLabel").textContent=h.playersLabel||"players online";
+
+  buildShowcase();
+
+  $("joinTitle").textContent=cfg.howToJoin.title;
+  const ol=$("joinSteps"); ol.innerHTML="";
+  cfg.howToJoin.steps.forEach((x,i)=>{const li=document.createElement("li");li.className="reveal";li.style.transitionDelay=i*110+"ms";li.textContent=x;ol.appendChild(li)});
+
+  $("faqTitle").textContent=cfg.faqTitle||"FAQ";
+  const fl=$("faqList"); fl.innerHTML="";
+  (cfg.faq||[]).forEach((q,i)=>{
+    const dt=document.createElement("details"); dt.className="reveal";
+    dt.style.setProperty("--faq-delay",`${Math.min(i,6)*75}ms`);
+    const sm=document.createElement("summary"); sm.textContent=q.q;
+    const an=document.createElement("div"); an.className="ans"; an.textContent=q.a;
+    const inner=document.createElement("div"); inner.className="faq-answer-inner"; inner.appendChild(an);
+    const answer=document.createElement("div"); answer.className="faq-answer-wrap"; answer.appendChild(inner);
+    dt.append(sm,answer); fl.appendChild(dt);
+  });
+
+  $("footerName").textContent=s.name;
+  $("footerText").textContent=cfg.footer.text||"";
+  $("footerCopy").textContent="© "+new Date().getFullYear()+" "+s.name;
+  const fk=$("footerLinks"); fk.innerHTML="";
+  (cfg.footer.links||[]).forEach(l=>{const a=document.createElement("a");a.href=l.url;a.textContent=l.label;a.target="_blank";a.rel="noopener";fk.appendChild(a)});
+}
+
+/* ---------- live chat card (driftStore plugin + secret.json) ---------- */
+async function readSecretFile(){
+  try{ return await readJSON("secret.json"); }catch(e){ return null; }
+}
+async function chatFetch(path,secretKey){
+  const controller=new AbortController();
+  const timer=setTimeout(()=>controller.abort(),7000);
+  try{
+    const response=await fetch(path,{signal:controller.signal,cache:"no-store",
+      headers:{"X-Drift-Secret":secretKey,"Accept":"application/json"}});
+    if(!response.ok) throw new Error("HTTP "+response.status);
+    return await response.json();
+  }finally{ clearTimeout(timer); }
+}
+function chatClock(value){
+  const date=new Date(value);
+  if(isNaN(date)) return "";
+  return date.toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"});
+}
+async function setupLiveChat(cfg){
+  const ed=(cfg.editor&&cfg.editor.liveChat)||DEFAULT_SITE.liveChat;
+  const section=$("liveChat");
+  // The card only appears once live chat really is set up (secret.json filled in).
+  if(ed.enabled===false){ section.hidden=true; return; }
+  $("chatTitle").textContent=ed.title||"Live chat";
+  $("chatSubtitle").textContent=ed.subtitle||"";
+  $("chatDiscord").href=cfg.discord.link;
+  if(ed.subtitle===false) $("chatSubtitle").hidden=true;
+
+  const list=$("chatList"), badge=$("chatBadge"), badgeText=$("chatBadgeText");
+  const max=Math.max(5,Number(ed.maxMessages)||40);
+  let lastId=0, printed=0;
+
+  const showSetup=(text,ready)=>{
+    list.innerHTML="";
+    const li=document.createElement("li");
+    li.className="chat-empty";
+    const wrap=document.createElement("div");
+    wrap.className="chat-setup";
+    const p=document.createElement("p");
+    p.textContent=text;
+    wrap.appendChild(p);
+    if(!ready){
+      const hint=document.createElement("p");
+      hint.textContent="1. Install the driftStore plugin and put your server address in its config.yml: server: \"ip:port\".";
+      const hint2=document.createElement("p");
+      hint2.textContent="2. Download plugins/driftStore/secret.json - the plugin writes it for you with the right apiUrl and secret - and put it next to index.html.";
+      const hint3=document.createElement("p");
+      hint3.textContent="3. Reload this page - live chat, players and uptime then update on their own.";
+      wrap.append(hint,hint2,hint3);
+    }
+    li.appendChild(wrap);
+    list.appendChild(li);
+    badge.classList.remove("live");
+    badgeText.textContent=ready?"Waiting":"Not connected";
+  };
+
+  const addMessages=messages=>{
+    if(!messages.length){
+      if(!printed && !list.querySelector(".chat-empty")){
+        list.innerHTML="";
+        const li=document.createElement("li");
+        li.className="chat-empty";
+        li.textContent="No messages yet - say hi in-game!";
+        list.appendChild(li);
+      }
+      return;
+    }
+    const empty=list.querySelector(".chat-empty");
+    if(empty) empty.remove();
+    messages.forEach(message=>{
+      const li=document.createElement("li");
+      li.className="chat-msg"+(message.type==="system"?" system":"");
+      const time=document.createElement("time");
+      time.textContent=chatClock(message.time);
+      const name=document.createElement("b");
+      name.textContent=message.player||"Server";
+      const text=document.createElement("span");
+      text.textContent=message.message||"";
+      li.append(time,name,text);
+      list.appendChild(li);
+      printed++;
+    });
+    while(list.children.length>max) list.removeChild(list.firstElementChild);
+    list.scrollTop=list.scrollHeight;
+  };
+
+  const secret=await readSecretFile();
+  const apiUrl=secret?String(secret.apiUrl||"").trim().replace(/\/+$/,""):"";
+  const secretKey=secret?String(secret.secret||"").trim():"";
+  if(!apiUrl||!secretKey){
+    section.hidden=true;
+    return;
+  }
+
+  section.hidden=false;
+  $("chatHint").textContent="Chat, players online and uptime come straight from your driftStore plugin.";
+  badgeText.textContent="Connecting…";
+
+  const tick=async()=>{
+    try{
+      const [status,chat]=await Promise.all([
+        chatFetch(apiUrl+"/api/status",secretKey),
+        chatFetch(apiUrl+"/api/chat?since="+lastId+"&limit="+max,secretKey)
+      ]);
+      $("chatPlayers").textContent=(status&&status.players&&Number.isFinite(Number(status.players.online)))
+        ? Number(status.players.online)+"/"+(Number(status.players.max)||0) : "–";
+      $("chatUptime").textContent=(status&&status.uptime&&status.uptime.text)||"–";
+      badge.classList.add("live");
+      badgeText.textContent="Live";
+      const messages=Array.isArray(chat&&chat.messages)?chat.messages:[];
+      if(chat&&Number.isFinite(Number(chat.last))) lastId=Number(chat.last);
+      addMessages(messages);
+    }catch(error){
+      badge.classList.remove("live");
+      badgeText.textContent="Offline";
+      if(!printed) showSetup("Could not reach the driftStore plugin at "+apiUrl+". Check that the server is running and that secret.json matches secret.yml.",false);
+    }
+  };
+
+  tick();
+  setInterval(()=>{ if(!document.hidden) tick(); },Math.max(5,Number(ed.refreshSeconds)||12)*1000);
+}
+
+/* ---------- ascendant light background ---------- */
+function setupLightBackground(){
+  const layer=document.createElement("div");
+  layer.className="light-layer";
+  layer.setAttribute("aria-hidden","true");
+  const one=document.createElement("div");
+  one.className="light-ray";
+  const scale=document.createElement("div");
+  scale.className="light-scale";
+  scale.append(one);
+  layer.appendChild(scale);
+
+  const motes=document.createElement("div");
+  motes.className="mote-container";
+  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const count=reduce?0:(innerWidth<760?8:14);
+  for(let i=0;i<count;i++){
+    const mote=document.createElement("div");
+    mote.className="mote";
+    const size=Math.random()*3+1;
+    mote.style.width=size+"px";
+    mote.style.height=size+"px";
+    mote.style.left=(Math.random()*100).toFixed(2)+"vw";
+    mote.style.animationDelay=(-Math.random()*10).toFixed(2)+"s";
+    mote.style.animationDuration=(Math.random()*5+8).toFixed(2)+"s";
+    motes.appendChild(mote);
+  }
+  layer.appendChild(motes);
+  document.body.prepend(layer);
+}
+
+/* ---------- liquid glass buttons ---------- */
+function setupGlassButtons(){
+  let current=null,queued=false,lastEvent=null;
+  document.addEventListener("pointermove",event=>{
+    lastEvent=event;
+    if(queued) return;
+    queued=true;
+    requestAnimationFrame(()=>{
+      queued=false;
+      const ev=lastEvent;
+      if(!ev) return;
+      const target=ev.target.closest?ev.target.closest(".btn,.store-btn,.shop-cta,.mini-copy,.page-tabs a"):null;
+      if(current&&current!==target){ current.style.removeProperty("--gx"); current.style.removeProperty("--gy"); }
+      current=target;
+      if(!target) return;
+      const rect=target.getBoundingClientRect();
+      if(!rect.width||!rect.height) return;
+      target.style.setProperty("--gx",((ev.clientX-rect.left)/rect.width*100).toFixed(1)+"%");
+      target.style.setProperty("--gy",((ev.clientY-rect.top)/rect.height*100).toFixed(1)+"%");
+    });
+  },{passive:true});
+}
+
+/* ---------- interaction polish ---------- */
+function setupScrollMotion(){
+  if(reduceMotion) return;
+  const groups=[".players-dashboard > *",".chat-card",".discord > *",".footer-inner",".live-stats .stat"];
+  const els=[];
+  groups.forEach(selector=>document.querySelectorAll(selector).forEach(el=>els.push(el)));
+  els.forEach((el,index)=>{
+    if(el.classList.contains("reveal")) return;
+    el.classList.add("reveal");
+    el.style.transitionDelay=Math.min(index,6)*70+"ms";
+  });
+}
+/* background drifts through the colour wheel as the page scrolls */
+function setupScrollColour(){
+  const root=document.documentElement;
+  if(reduceMotion){ root.style.setProperty("--scroll-hue","0deg"); return; }
+  let queued=false,lastHue=-1;
+  const paint=()=>{
+    queued=false;
+    const max=document.documentElement.scrollHeight-innerHeight;
+    const p=max>0?Math.min(1,Math.max(0,scrollY/max)):0;
+    const hue=Math.round(p*24)*2; /* 24 steps: the glow repaints far less while scrolling */
+    if(hue===lastHue) return;
+    lastHue=hue;
+    root.style.setProperty("--scroll-hue",hue+"deg");
+  };
+  addEventListener("scroll",()=>{
+    if(queued) return;
+    queued=true;
+    requestAnimationFrame(paint);
+    setTimeout(()=>{ if(queued) paint(); },120);
+  },{passive:true});
+  paint();
+}
+function setupReveal(){
+  const els=document.querySelectorAll(".reveal");
+  if(!("IntersectionObserver" in window)){els.forEach(e=>e.classList.add("in"));return}
+  const io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.add("in");io.unobserve(en.target)}}),{threshold:.12});
+  els.forEach(e=>io.observe(e));
+}
+function setupScrollSpy(){
+  if(!("IntersectionObserver" in window)) return;
+  const links=[...document.querySelectorAll("#nav a")];
+  const io=new IntersectionObserver(es=>es.forEach(en=>{
+    if(en.isIntersecting) links.forEach(a=>a.setAttribute("aria-current",String(a.dataset.t===en.target.id)));
+  }),{rootMargin:"-45% 0px -50% 0px"});
+  links.forEach(a=>{const sec=document.getElementById(a.dataset.t); if(sec) io.observe(sec)});
+}
+function setupTilt(cfg){
+  const el=$("live");
+  if(cfg.tilt===false||reduceMotion||!matchMedia("(hover:hover) and (pointer:fine)").matches) return;
+  let queued=false,cx=0,cy=0;
+  el.addEventListener("pointermove",e=>{
+    cx=e.clientX; cy=e.clientY;
+    if(queued) return;
+    queued=true;
+    requestAnimationFrame(()=>{
+      queued=false;
+      const r=el.getBoundingClientRect(), x=(cx-r.left)/r.width, y=(cy-r.top)/r.height;
+      el.style.transform=`rotateY(${(x-.5)*8}deg) rotateX(${(.5-y)*8}deg)`;
+      el.style.setProperty("--gx",x*100+"%"); el.style.setProperty("--gy",y*100+"%");
+    });
+  },{passive:true});
+  el.addEventListener("pointerleave",()=>{el.style.transform="";el.style.setProperty("--gx","50%");el.style.setProperty("--gy","0%")});
+}
+function setupCustomCursor(){
+  if(reduceMotion||!matchMedia("(hover:hover) and (pointer:fine)").matches) return;
+  const cursor=$("customCursor");
+  document.body.classList.add("custom-cursor-enabled");
+  let queued=false,px=0,py=0,hovering=false;
+  document.addEventListener("pointermove",e=>{
+    px=e.clientX; py=e.clientY;
+    hovering=!!e.target.closest("a,button,summary,[role='button']");
+    if(queued) return;
+    queued=true;
+    requestAnimationFrame(()=>{
+      queued=false;
+      cursor.style.setProperty("--cursor-x",px+"px");
+      cursor.style.setProperty("--cursor-y",py+"px");
+      cursor.classList.add("visible");
+      cursor.classList.toggle("hovering",hovering);
+    });
+  },{passive:true});
+  document.addEventListener("pointerleave",()=>cursor.classList.remove("visible","hovering"));
+}
+function countTo(el,to){
+  const from=parseInt(el.dataset.v||"0",10)||0; el.dataset.v=to;
+  if(!document.body.classList.contains("anim")||from===to){el.textContent=to;return}
+  const t0=performance.now(),dur=1100;
+  (function step(t){
+    const p=Math.min(1,(t-t0)/dur), e=1-Math.pow(1-p,3);
+    el.textContent=Math.round(from+(to-from)*e);
+    if(p<1) requestAnimationFrame(step);
+  })(t0);
+}
+
+/* ---------- MOTD (built with textContent, never raw HTML) ---------- */
+const MC_COL={0:"#555555",1:"#0000aa",2:"#00aa00",3:"#00aaaa",4:"#aa0000",5:"#aa00aa",6:"#ffaa00",7:"#aaaaaa",8:"#777777",9:"#5555ff",a:"#55ff55",b:"#55ffff",c:"#ff5555",d:"#ff55ff",e:"#ffff55",f:"#ffffff"};
+function renderMotd(el,raw){
+  el.textContent="";
+  String(raw||"").split("\n").forEach(line=>{
+    const row=document.createElement("div");
+    let st={c:null,b:false,i:false,u:false,s:false}, buf="";
+    const flush=()=>{
+      if(!buf) return;
+      const sp=document.createElement("span"); sp.textContent=buf; buf="";
+      if(st.c) sp.style.color=st.c;
+      if(st.b) sp.style.fontWeight="700";
+      if(st.i) sp.style.fontStyle="italic";
+      if(st.u||st.s) sp.style.textDecoration=[st.u?"underline":"",st.s?"line-through":""].join(" ").trim();
+      row.appendChild(sp);
+    };
+    for(let k=0;k<line.length;k++){
+      if(line[k]==="§" && k+1<line.length){
+        flush(); const c=line[++k].toLowerCase();
+        if(MC_COL[c]) st={c:MC_COL[c],b:false,i:false,u:false,s:false};
+        else if(c==="l") st.b=true; else if(c==="o") st.i=true;
+        else if(c==="n") st.u=true; else if(c==="m") st.s=true;
+        else if(c==="r") st={c:null,b:false,i:false,u:false,s:false};
+      } else buf+=line[k];
+    }
+    flush(); el.appendChild(row);
+  });
+}
+
+/* ---------- LIVE server status (real data, no fake numbers) ---------- */
+async function getJSON(url){
+  const c=new AbortController(); const t=setTimeout(()=>c.abort(),8000);
+  try{const r=await fetch(url,{signal:c.signal}); if(!r.ok) throw new Error(r.status); return await r.json()} finally{clearTimeout(t)}
+}
+async function queryServer(s){
+  const host=s.bedrock?`${s.ip}:${s.bedrockPort||19132}`:s.ip, q=encodeURIComponent(host);
+  try{   // 1) mcstatus.io
+    const j=await getJSON(`https://api.mcstatus.io/v2/status/${s.bedrock?"bedrock":"java"}/${q}`);
+    return {online:!!j.online,now:j.players?.online??0,max:j.players?.max??0,
+            icon:j.icon||"",motd:j.motd?.raw||"",names:(j.players?.list||[]).map(p=>p.name_clean||p.name)};
+  }catch(e){}
+  // 2) mcsrvstat.us (backup)
+  const j=await getJSON(`https://api.mcsrvstat.us/${s.bedrock?"bedrock/":""}3/${q}`);
+  const m=j.motd?.raw;
+  return {online:!!j.online,now:j.players?.online??0,max:j.players?.max??0,
+          icon:j.icon||"",motd:Array.isArray(m)?m.join("\n"):(m||""),names:(j.players?.list||[]).map(p=>p.name)};
+}
+/* the driftStore plugin is the most accurate source: it reads the server itself */
+async function queryPlugin(){
+  try{
+    const secret=await readSecretFile();
+    const apiUrl=secret?String(secret.apiUrl||"").trim().replace(/\/+$/,""):"";
+    const key=secret?String(secret.secret||"").trim():"";
+    if(!apiUrl||!key) return null;
+    const [status,players]=await Promise.all([
+      chatFetch(apiUrl+"/api/status",key),
+      chatFetch(apiUrl+"/api/players?limit=60",key).catch(()=>null)
+    ]);
+    const online=status&&status.players?Number(status.players.online):NaN;
+    if(!Number.isFinite(online)) return null;
+    const list=players&&Array.isArray(players.players)?players.players:[];
+    const names=(list.length?list.map(p=>String((p&&(p.displayName||p.name))||"").trim()):(status.players.names||[])).filter(Boolean);
+    return {online:true,now:online,max:Number(status.players.max)||0,icon:"",
+            motd:String((status.server&&status.server.motd)||""),names};
+  }catch(error){
+    return null;
+  }
+}
+function updatePlayerSection({now,max,note}){
+  $("onlinePlayersNow").textContent=now;
+  const featureChip=$("featuresPlayers");
+  if(featureChip) featureChip.textContent=now;
+  $("onlinePlayersMax").textContent=max;
+  $("onlinePlayersNote").textContent=note;
+  const capacity=Number(max),online=Number(now);
+  $("onlinePlayersBar").style.width=(capacity>0&&Number.isFinite(online)?Math.min(100,online/capacity*100):0)+"%";
+}
+/* ---------- live Discord member count (public invite API, no token needed) ---------- */
+function inviteCodeFrom(link){
+  const m=String(link||"").match(/discord\.(?:gg|com\/invite)\/([A-Za-z0-9-]+)/i);
+  return m?m[1]:"";
+}
+async function updateDiscord(cfg){
+  const d=(cfg.editor&&cfg.editor.hero&&cfg.editor.hero.discord)||{};
+  const box=$("statDiscord");
+  if(d.enabled===false){ box.hidden=true; return; }
+  const code=String(d.inviteCode||"").trim()||inviteCodeFrom(cfg.discord.link);
+  if(!code){ box.hidden=true; return; }
+  try{
+    const r=await fetch("https://discord.com/api/v10/invites/"+encodeURIComponent(code)+"?with_counts=true",{cache:"no-store"});
+    if(!r.ok) throw new Error("invite "+r.status);
+    const j=await r.json();
+    const members=Number(j.approximate_member_count), presence=Number(j.approximate_presence_count);
+    if(!Number.isFinite(members)) throw new Error("no member count");
+    $("statMembers").textContent=members.toLocaleString("en-US");
+    const pres=$("statPresence");
+    if(Number.isFinite(presence)&&presence>0){
+      pres.textContent=presence.toLocaleString("en-US")+" online now"; pres.hidden=false;
+    } else pres.hidden=true;
+    box.hidden=false;
+  }catch(e){
+    console.warn("Discord member count unavailable - check the invite code / that the invite is public.",e);
+    box.hidden=true;
+  }
+}
+
+async function updateStatus(cfg){
+  const h=cfg.hero, st=$("status"), live=$("live");
+  try{
+    const r=(await queryPlugin())||await queryServer(cfg.server);
+    live.classList.remove("loading");
+    if(r.online){
+      st.className="status online"; $("statusText").textContent=h.onlineText;
+      countTo($("playersNow"),r.now); countTo($("playersMax"),r.max);
+      $("statPlayers").textContent=r.now;
+      $("playersBar").style.width=(r.max?Math.min(100,r.now/r.max*100):0)+"%";
+      const names=(r.names||[]).filter(Boolean).slice(0,16);
+      updatePlayerSection({now:r.now,max:r.max,note:"The server is online"});
+      if(cfg.useServerIcon!==false && /^data:image\//.test(r.icon||"")){
+        ["logo","heroLogo"].forEach(id=>{const i=$(id);i.src=r.icon;i.style.display="";i.classList.add("mc-icon")});
+        $("favicon").href=r.icon;
+      }
+      const mo=$("motd");
+      if(cfg.showMotd!==false && r.motd){renderMotd(mo,r.motd);mo.hidden=false}else mo.hidden=true;
+      const ul=$("whoList"); ul.textContent="";
+      names.forEach(n=>{const li=document.createElement("li");li.textContent=n;ul.appendChild(li)});
+      $("who").hidden=!names.length;
+    }else{
+      st.className="status offline"; $("statusText").textContent=h.offlineText;
+      countTo($("playersNow"),0); $("playersMax").textContent="–"; $("playersBar").style.width="0";
+      $("statPlayers").textContent="0";
+      updatePlayerSection({now:0,max:"–",note:"The server is offline"});
+      $("motd").hidden=true; $("who").hidden=true;
+    }
+  }catch(e){
+    live.classList.remove("loading"); st.className="status";
+    $("statusText").textContent=PREVIEW?"Live count activates on your hosted site":"Status unavailable";
+    $("playersNow").textContent="–"; $("playersMax").textContent="–";
+    $("statPlayers").textContent="–";
+    updatePlayerSection({now:"–",max:"–",note:"Player count is unavailable"});
+  }
+}
+
+(async()=>{
+  const cfg=await loadConfig();
+  if(cfg.animations!==false) document.body.classList.add("anim");
+  if(cfg.editor&&cfg.editor.floatingNavbar===true){
+    document.body.classList.add("nav-floating");
+    document.documentElement.classList.add("nav-floating");
+  }
+  fill(cfg); applyTheme(cfg); setupScrollMotion(); setupReveal(); setupScrollColour(); setupScrollSpy(); setupTilt(cfg); setupCustomCursor();
+  if(cfg.animations!==false){ setupLightBackground(); }
+  setupGlassButtons();
+  setupStoreSearch(cfg);
+  updateStatus(cfg); updateDiscord(cfg); setupLiveChat(cfg);
+  setInterval(()=>updateStatus(cfg),Math.max(10,cfg.server.refreshSeconds||30)*1000);
+  const edHero=cfg.editor&&cfg.editor.hero;
+  setInterval(()=>updateDiscord(cfg),Math.max(60,(edHero&&edHero.discord&&edHero.discord.refreshSeconds)||300)*1000);
+})();
+</script>
+</body>
+</html>
