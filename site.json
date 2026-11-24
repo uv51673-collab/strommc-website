@@ -30,7 +30,7 @@
 
   "liveChat": {
     "_help": "The live chat card on the homepage. It reads secret.json (plugin URL + secret) and shows live Minecraft chat, players online and server uptime. Set enabled to false to hide the card.",
-    "enabled": true,
+    "enabled": false,
     "title": "Live chat",
     "subtitle": "What players are saying in-game right now, refreshed automatically.",
     "refreshSeconds": 12,
