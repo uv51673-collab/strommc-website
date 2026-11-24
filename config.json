@@ -1,10 +1,10 @@
 {
   "serverName": "StormMC",
   "serverIp": "Comming soon",
-  "bedrockPort": Comming,
+  "bedrockPort": "Comming",
   "bedrockPlayersCanJoin": true,
   "discordLink": "https://discord.gg/VmHjwtJ6Gy",
-  "logoPath": "",
+  "logoPath": "Screenshot 2026-11-24 at 20-59-29 StormMC_Lightning_Emblem.png (PNG Image 1254 × 1254 pixels) — Scaled (77%).png",
   "defaultColour": "blue",
   "_defaultColourHelp": "Choose red, blue, yellow, purple, white, pink, or orange."
 }
