@@ -1,9 +1,9 @@
 {
-  "serverName": "Drift Development",
-  "serverIp": "play.example.com",
-  "bedrockPort": 19132,
+  "serverName": "StormMC",
+  "serverIp": "Comming soon",
+  "bedrockPort": Comming,
   "bedrockPlayersCanJoin": true,
-  "discordLink": "https://discord.gg/S763GafZPR",
+  "discordLink": "https://discord.gg/VmHjwtJ6Gy",
   "logoPath": "",
   "defaultColour": "blue",
   "_defaultColourHelp": "Choose red, blue, yellow, purple, white, pink, or orange."
