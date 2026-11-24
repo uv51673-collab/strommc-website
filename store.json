@@ -123,7 +123,7 @@
             "INR": 49,
             "USD": 0.59
           },
-          "colour": "#38bdf8",
+          "colour": "#22c55e",
           "tagline": "A quick key for everyday rewards.",
           "perks": [
             "1 Vote Key",
@@ -133,12 +133,97 @@
           "badge": ""
         },
         {
-          "name": "Party Key",
+          "name": "Breeze Crate",
           "amount": "x1",
           "image": "assets/key.png",
           "price": {
             "INR": 99,
             "USD": 1.19
+          },
+          "colour": "#38bdf8",
+          "tagline": "A light start for new crate openers.",
+          "perks": [
+            "1 Breeze Crate key",
+            "Opens the Breeze crate"
+          ],
+          "featured": false,
+          "badge": ""
+        },
+        {
+          "name": "Gust Crate",
+          "amount": "x1",
+          "image": "assets/key.png",
+          "price": {
+            "INR": 149,
+            "USD": 1.79
+          },
+          "colour": "#14b8a6",
+          "tagline": "A stronger wind with better rewards.",
+          "perks": [
+            "1 Gust Crate key",
+            "Opens the Gust crate"
+          ],
+          "featured": false,
+          "badge": ""
+        },
+        {
+          "name": "Tempest Crate",
+          "amount": "x1",
+          "image": "assets/key.png",
+          "price": {
+            "INR": 249,
+            "USD": 2.99
+          },
+          "colour": "#3b82f6",
+          "tagline": "Rare rewards as the storm builds.",
+          "perks": [
+            "1 Tempest Crate key",
+            "Opens the Tempest crate"
+          ],
+          "featured": false,
+          "badge": ""
+        },
+        {
+          "name": "Thunder Crate",
+          "amount": "x1",
+          "image": "assets/key.png",
+          "price": {
+            "INR": 399,
+            "USD": 4.79
+          },
+          "colour": "#eab308",
+          "tagline": "Loud, powerful and full of loot.",
+          "perks": [
+            "1 Thunder Crate key",
+            "Opens the Thunder crate"
+          ],
+          "featured": false,
+          "badge": ""
+        },
+        {
+          "name": "Storm Crate",
+          "amount": "x1",
+          "image": "assets/key.png",
+          "price": {
+            "INR": 599,
+            "USD": 7.19
+          },
+          "colour": "#a855f7",
+          "tagline": "The strongest crate in the lobby.",
+          "perks": [
+            "1 Storm Crate key",
+            "Opens the Storm crate"
+          ],
+          "featured": false,
+          "badge": ""
+        },
+        {
+          "name": "Party Key",
+          "amount": "x1",
+          "image": "assets/key.png",
+          "price": {
+            "INR": 799,
+            "USD": 9.59
           },
           "colour": "#ec4899",
           "tagline": "Bring the fun with a Party crate.",
@@ -148,57 +233,6 @@
           ],
           "featured": false,
           "badge": ""
-        },
-        {
-          "name": "Mystic Key",
-          "amount": "x1",
-          "image": "assets/key.png",
-          "price": {
-            "INR": 199,
-            "USD": 2.49
-          },
-          "colour": "#a855f7",
-          "tagline": "Rare rewards wrapped in mystery.",
-          "perks": [
-            "1 Mystic Key",
-            "Opens the Mystic crate"
-          ],
-          "featured": true,
-          "badge": "Popular"
-        },
-        {
-          "name": "Storm Key",
-          "amount": "x1",
-          "image": "assets/key.png",
-          "price": {
-            "INR": 349,
-            "USD": 4.49
-          },
-          "colour": "#3b82f6",
-          "tagline": "The strongest key in the lobby.",
-          "perks": [
-            "1 Storm Key",
-            "Opens the Storm crate"
-          ],
-          "featured": false,
-          "badge": "Best value"
-        },
-        {
-          "name": "Monthly Key",
-          "amount": "x1",
-          "image": "assets/key.png",
-          "price": {
-            "INR": 599,
-            "USD": 7.49
-          },
-          "colour": "#eab308",
-          "tagline": "A fresh key every month.",
-          "perks": [
-            "1 Monthly Key",
-            "Opens the Monthly crate"
-          ],
-          "featured": false,
-          "badge": "Collector"
         }
       ]
     }
@@ -253,8 +287,8 @@
         "Access to /enderchest",
         "Priority queue when the server is full"
       ],
-      "featured": true,
-      "badge": "Popular"
+      "featured": false,
+      "badge": ""
     },
     {
       "name": "Storm",
