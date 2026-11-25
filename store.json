@@ -116,6 +116,23 @@
       "buttonText": "Buy keys",
       "cards": [
         {
+          "name": "Monthly Crate",
+          "amount": "x1",
+          "image": "assets/key.png",
+          "price": {
+            "INR": 799,
+            "USD": 9.59
+          },
+          "colour": "#1e3a8a",
+          "tagline": "Our special monthly crate.",
+          "perks": [
+            "1 Monthly Crate key",
+            "Opens the Monthly crate"
+          ],
+          "featured": false,
+          "badge": ""
+        },
+        {
           "name": "Surge Crate",
           "amount": "x1",
           "image": "assets/key.png",
@@ -179,23 +196,6 @@
           "perks": [
             "1 Storm Crate key",
             "Opens the Storm crate"
-          ],
-          "featured": false,
-          "badge": ""
-        },
-        {
-          "name": "Monthly Crate",
-          "amount": "x1",
-          "image": "assets/key.png",
-          "price": {
-            "INR": 799,
-            "USD": 9.59
-          },
-          "colour": "#1e3a8a",
-          "tagline": "Our special monthly crate.",
-          "perks": [
-            "1 Monthly Crate key",
-            "Opens the Monthly crate"
           ],
           "featured": false,
           "badge": ""
