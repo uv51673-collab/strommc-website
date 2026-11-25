@@ -199,40 +199,6 @@
           ],
           "featured": false,
           "badge": ""
-        },
-        {
-          "name": "Vote Key",
-          "amount": "x1",
-          "image": "assets/key.png",
-          "price": {
-            "INR": 49,
-            "USD": 0.59
-          },
-          "colour": "blue",
-          "tagline": "A quick key for everyday rewards.",
-          "perks": [
-            "1 Vote Key",
-            "Opens the Vote crate"
-          ],
-          "featured": false,
-          "badge": ""
-        },
-        {
-          "name": "Party Key",
-          "amount": "x1",
-          "image": "assets/key.png",
-          "price": {
-            "INR": 149,
-            "USD": 1.79
-          },
-          "colour": "blue",
-          "tagline": "Bring the fun with a Party crate.",
-          "perks": [
-            "1 Party Key",
-            "Opens the Party crate"
-          ],
-          "featured": false,
-          "badge": ""
         }
       ]
     }
