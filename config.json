@@ -1,7 +1,7 @@
 {
   "serverName": "StormMC",
-  "serverIp": "stormmc.minecraftr.us:25615",
-  "bedrockPort": "Comming",
+  "serverIp": "stormmc.minecraftr.us",
+  "bedrockPort": "25615",
   "bedrockPlayersCanJoin": true,
   "discordLink": "https://discord.gg/VmHjwtJ6Gy",
   "logoPath": "logo.png",
