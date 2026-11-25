@@ -107,7 +107,7 @@
     },
     "keys": {
       "navLabel": "Keys",
-      "colour": "blue",
+      "colour": "#1e3a8a",
       "title": "Keys",
       "subtitle": "Unlock crates for cosmetics, gear and rare collectables. Keys are delivered to your account.",
       "boardTitle": "Available keys",
@@ -123,7 +123,7 @@
             "INR": 99,
             "USD": 1.19
           },
-          "colour": "blue",
+          "colour": "#1e3a8a",
           "tagline": "A solid start for new crate openers.",
           "perks": [
             "1 Surge Crate key",
@@ -140,7 +140,7 @@
             "INR": 199,
             "USD": 2.39
           },
-          "colour": "blue",
+          "colour": "#1e3a8a",
           "tagline": "Better rewards with every opening.",
           "perks": [
             "1 Thunder Crate key",
@@ -157,7 +157,7 @@
             "INR": 349,
             "USD": 4.19
           },
-          "colour": "blue",
+          "colour": "#1e3a8a",
           "tagline": "Rare rewards from a powerful crate.",
           "perks": [
             "1 Cyclone Crate key",
@@ -174,7 +174,7 @@
             "INR": 599,
             "USD": 7.19
           },
-          "colour": "blue",
+          "colour": "#1e3a8a",
           "tagline": "The strongest crate in the lobby.",
           "perks": [
             "1 Storm Crate key",
@@ -191,7 +191,7 @@
             "INR": 799,
             "USD": 9.59
           },
-          "colour": "blue",
+          "colour": "#1e3a8a",
           "tagline": "Our special monthly crate.",
           "perks": [
             "1 Monthly Crate key",
