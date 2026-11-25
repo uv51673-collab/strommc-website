@@ -120,10 +120,10 @@
           "amount": "x1",
           "image": "assets/key.png",
           "price": {
-            "INR": 799,
-            "USD": 9.59
+            "INR": 99,
+            "USD": 1.19
           },
-          "colour": "#1e3a8a",
+          "colour": "#60a5fa",
           "tagline": "Our special monthly crate.",
           "perks": [
             "1 Monthly Crate key",
@@ -137,10 +137,10 @@
           "amount": "x1",
           "image": "assets/key.png",
           "price": {
-            "INR": 99,
-            "USD": 1.19
+            "INR": 199,
+            "USD": 2.39
           },
-          "colour": "#60a5fa",
+          "colour": "#3b82f6",
           "tagline": "A solid start for new crate openers.",
           "perks": [
             "1 Surge Crate key",
@@ -154,10 +154,10 @@
           "amount": "x1",
           "image": "assets/key.png",
           "price": {
-            "INR": 199,
-            "USD": 2.39
+            "INR": 349,
+            "USD": 4.19
           },
-          "colour": "#3b82f6",
+          "colour": "#2563eb",
           "tagline": "Better rewards with every opening.",
           "perks": [
             "1 Thunder Crate key",
@@ -171,10 +171,10 @@
           "amount": "x1",
           "image": "assets/key.png",
           "price": {
-            "INR": 349,
-            "USD": 4.19
+            "INR": 599,
+            "USD": 7.19
           },
-          "colour": "#2563eb",
+          "colour": "#1d4ed8",
           "tagline": "Rare rewards from a powerful crate.",
           "perks": [
             "1 Cyclone Crate key",
@@ -188,10 +188,10 @@
           "amount": "x1",
           "image": "assets/key.png",
           "price": {
-            "INR": 599,
-            "USD": 7.19
+            "INR": 799,
+            "USD": 9.59
           },
-          "colour": "#1d4ed8",
+          "colour": "#1e3a8a",
           "tagline": "The strongest crate in the lobby.",
           "perks": [
             "1 Storm Crate key",
