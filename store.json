@@ -33,7 +33,7 @@
     "_help": "One block per store page. 'navLabel' = the tab name in the store menu. 'colour' = the colour of the whole page (a name like gold, purple, blue or a hex value; empty = the site colour from config.json). 'cards' (coins and keys) are the packs for sale.",
     "ranks": {
       "navLabel": "Ranks",
-      "colour": "",
+      "colour": "#1e40af",
       "title": "Ranks",
       "subtitle": "Support the server and unlock ranks, perks and cosmetics for your account.",
       "boardTitle": "Available ranks",
@@ -209,12 +209,12 @@
       "name": "Breeze",
       "price": {
         "INR": 149,
-        "USD": 1.99
+        "USD": 1.79
       },
-      "colour": "blue",
+      "colour": "#60a5fa",
       "tagline": "A light start to support StormMC.",
       "perks": [
-        "Coloured Breeze name in chat",
+        "Breeze chat prefix",
         "Breeze role in Discord",
         "2 extra /home slots"
       ],
@@ -222,16 +222,16 @@
       "badge": ""
     },
     {
-      "name": "Tempest",
+      "name": "Gust",
       "price": {
         "INR": 299,
-        "USD": 3.99
+        "USD": 3.59
       },
-      "colour": "blue",
+      "colour": "#3b82f6",
       "tagline": "More homes and more perks as the wind picks up.",
       "perks": [
         "Everything in Breeze",
-        "Tempest chat prefix",
+        "Gust chat prefix",
         "4 extra /home slots",
         "Access to /workbench"
       ],
@@ -239,16 +239,16 @@
       "badge": ""
     },
     {
-      "name": "Thunder",
+      "name": "Tempest",
       "price": {
         "INR": 499,
         "USD": 5.99
       },
-      "colour": "blue",
-      "tagline": "The most popular rank on the server.",
+      "colour": "#2563eb",
+      "tagline": "Stronger perks for dedicated players.",
       "perks": [
-        "Everything in Tempest",
-        "Thunder chat prefix",
+        "Everything in Gust",
+        "Tempest chat prefix",
         "6 extra /home slots",
         "Access to /enderchest",
         "Priority queue when the server is full"
@@ -257,40 +257,41 @@
       "badge": ""
     },
     {
-      "name": "Storm",
+      "name": "Thunder",
       "price": {
         "INR": 799,
-        "USD": 9.99
+        "USD": 9.59
       },
-      "colour": "blue",
-      "tagline": "Stand out everywhere you go.",
+      "colour": "#1d4ed8",
+      "tagline": "Premium perks and extra convenience.",
+      "perks": [
+        "Everything in Tempest",
+        "Thunder chat prefix",
+        "10 extra /home slots",
+        "Custom join message",
+        "Extra claim blocks"
+      ],
+      "featured": false,
+      "badge": ""
+    },
+    {
+      "name": "Storm",
+      "price": {
+        "INR": 1299,
+        "USD": 15.59
+      },
+      "colour": "#1e3a8a",
+      "tagline": "The top rank with the full StormMC package.",
       "perks": [
         "Everything in Thunder",
         "Storm chat prefix",
-        "Custom join message",
-        "Extra claim blocks",
-        "Monthly cosmetic crate"
-      ],
-      "featured": false,
-      "badge": "Best value"
-    },
-    {
-      "name": "Hurricane",
-      "price": {
-        "INR": 1499,
-        "USD": 17.99
-      },
-      "colour": "blue",
-      "tagline": "The full package for serious players.",
-      "perks": [
-        "Everything in Storm",
         "Unlimited /home slots",
         "Cosmetic particle trail",
         "Early access to new features",
         "Private support channel in Discord"
       ],
       "featured": false,
-      "badge": "Ultimate"
+      "badge": ""
     }
   ]
 }
